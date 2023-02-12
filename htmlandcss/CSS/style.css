@@ -1,9 +1,285 @@
 body {
   text-align: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 ul {
   list-style-type: none; /* Remove bullets */
   padding: 0; /* Remove padding */
-  margin: 0; /* Remove margins */
+  margin: 45px; /* Remove margins */
+  display: inline-flex;
+}
+
+li {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+ul a {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 114% */
+
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.top {
+  position: relative;
+  background-image: url("/htmlandcss/assets/desktop-background.png");
+  background-position: right;
+  background-size: auto 800px;
+  height: 800px;
+}
+
+#project {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 16px;
+  /* identical to box height, or 80% */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  position: relative;
+  left: -40%;
+  top: 60px;
+}
+
+.big-logo {
+  width: 63px;
+  height: 63px;
+  position: relative;
+  margin-top: 125px;
+}
+
+.hero h1 {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 64px;
+  /* or 133% */
+
+  text-align: center;
+
+  color: #ffffff;
+
+  position: relative;
+  margin-top: 15px;
+}
+
+.hero h2 {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  /* or 133% */
+
+  text-align: center;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  position: relative;
+  margin-top: 40px;
+}
+
+.mid {
+  position: relative;
+  height: 700px;
+}
+
+.mid h2 {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 64px;
+  /* or 133% */
+
+  text-align: center;
+
+  color: #464547;
+  position: relative;
+  margin-top: 120px;
+}
+
+.mid h3 {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  /* or 133% */
+
+  text-align: center;
+
+  color: #666666;
+  position: relative;
+  margin-top: 50px;
+}
+
+.mid p {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  /* or 138% */
+
+  text-align: center;
+
+  color: #000000;
+
+  position: relative;
+  margin-top: 50px;
+}
+
+.mid button {
+  position: relative;
+  width: 115px;
+  height: 36px;
+  background: #55c2d8;
+  border-radius: 18px;
+  font-family: "Oswald";
+  font-size: 14px;
+  line-height: 26px;
+  border: none;
+  /* or 186% */
+
+  text-align: center;
+  letter-spacing: 0.1em;
+
+  color: #ffffff;
+  position: relative;
+  margin-top: 50px;
+}
+
+.bottom {
+  position: relative;
+  height: 666px;
+  background-image: url("/htmlandcss/assets/background2.png");
+  background-position: center;
+  background-size: auto 666px;
+}
+
+.bottom h1 {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 64px;
+  /* or 133% */
+
+  text-align: center;
+
+  color: #ffffff;
+
+  position: relative;
+  margin-bottom: 50px;
+  padding-top: 80px;
+}
+
+.bottom button {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  background: #39c2d7;
+  border-radius: 150px;
+  border: none;
+  color: white;
+  font-size: 70px;
+  text-align: center;
+}
+
+.bottom h3 {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  /* or 133% */
+
+  text-align: center;
+
+  color: #ffffff;
+  margin-top: 75px;
+}
+
+footer {
+  position: relative;
+  height: 170px;
+  background: #464547;
+  text-align: left;
+}
+
+.small-logo {
+  width: 20px;
+  height: 20px;
+  margin-left: 150px;
+  margin-right: 15px;
+  margin-top: 20px;
+}
+
+.project-and-logo {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 16px;
+  /* identical to box height, or 89% */
+
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.address {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* or 119% */
+
+  color: rgba(255, 255, 255, 0.4);
+
+  margin-left: 150px;
+  margin-top: 15px;
+}
+
+footer a {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* or 119% */
+
+  color: rgba(255, 255, 255, 0.4);
+
+  margin-left: 150px;
+}
+
+.rights {
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  /* or 119% */
+
+  color: rgba(255, 255, 255, 0.4);
+  margin-left: 150px;
 }

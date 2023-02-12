@@ -6,27 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTML-Essentials-HomeTask</title>
     <link rel="stylesheet" href="/htmlandcss/CSS/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <section class="top">
       <nav>
-        <a href="">Project</a>
+        <div id="project" href="">Project</div>
         <ul>
-          <li><a href="">Projects</a></li>
-          <li><a href="">About us</a></li>
-          <li><a href="">Stories</a></li>
-          <li><a href="">Contact</a></li>
+          <li><a class="header" href="">Projects</a></li>
+          <li><a class="header" href="">About us</a></li>
+          <li><a class="header" href="">Stories</a></li>
+          <li><a class="header" href="">Contact</a></li>
         </ul>
       </nav>
-      <img class="big-logo" src="/htmlandcss/assets/logo.png" alt="logo" />
-      <h1>
-        Your Headline <br />
-        Here
-      </h1>
-      <h2>
-        Lorem ipsum dolor sit amet, consectetur <br />
-        adipiscing elit sed do eiusmod.
-      </h2>
+      <div class="hero">
+        <img class="big-logo" src="/htmlandcss/assets/logo.png" alt="logo" />
+        <h1>
+          Your Headline <br />
+          Here
+        </h1>
+        <h2>
+          Lorem ipsum dolor sit amet, consectetur <br />
+          adipiscing elit sed do eiusmod.
+        </h2>
+      </div>
     </section>
     <section class="mid">
       <h2>
@@ -58,25 +66,24 @@
       <button type="submit">Read more</button>
     </section>
     <section class="bottom">
-      <h1>
-        Learn more <br />
-        about our culture...
-      </h1>
-      <button type="submit">&#9654;</button>
-      <h3>
-        Duis aute irure dolor in <br />
-        reprehenderit in voluptate velit esse <br />
-        cillum dolore eu fugiat nulla
-      </h3>
+      <div class="learn-more">
+        <h1>
+          Learn more <br />
+          about our culture...
+        </h1>
+        <button type="submit">
+          <div class="arrow">&#9654;</div>
+        </button>
+        <h3>
+          Duis aute irure dolor in <br />
+          reprehenderit in voluptate velit esse <br />
+          cillum dolore eu fugiat nulla
+        </h3>
+      </div>
     </section>
     <footer>
-      <div class="project">
-        <img
-          class="small-logo"
-          src="/htmlandcss/assets/logo.png"
-          alt="logo"
-          style="width: 20px; height: 20px"
-        />
+      <div class="project-and-logo">
+        <img class="small-logo" src="/htmlandcss/assets/logo.png" alt="logo" />
         Project
       </div>
       <div class="address">
@@ -84,8 +91,8 @@
           123 Street <br />
           Anytown, USA 12345
         </i>
-        <a class="email" href="">hello@website.com</a>
       </div>
+      <a class="email" href="">hello@website.com</a>
       <div class="rights">&#169; 2021 Project. All rights reserved</div>
     </footer>
   </body>
