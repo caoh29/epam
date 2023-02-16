@@ -7,7 +7,6 @@ body {
 }
 
 .top {
-  /* position: relative; */
   background-image: url("/CSS-Selectors-and-Responsive/assets/desktop-background.png");
   background-position: right;
   background-size: 1315px 822px;
@@ -317,4 +316,131 @@ footer {
 }
 
 @media (max-width: 768px) {
+  :root {
+    --device-width: 768px;
+  }
+
+  .top {
+    background-position: center;
+    background-size: var(--device-width) 816px;
+  }
+
+  .page-name {
+    margin-left: 25px;
+    margin-top: 0;
+  }
+
+  .menu {
+    visibility: hidden;
+  }
+
+  .checkbox {
+    width: 22px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 25px;
+  }
+
+  .line {
+    background-color: white;
+    flex: 0 0 3px;
+  }
+
+  .line1 {
+    margin-top: 50px;
+    margin-bottom: 3px;
+  }
+
+  .line2 {
+    margin-bottom: 3px;
+  }
+
+  .mid {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 990px;
+    /* border: solid 10px black; */
+  }
+  .mid h2 {
+    margin-top: 65px;
+    width: 355px;
+    margin-bottom: 0;
+  }
+
+  .mid h3 {
+    margin-top: 40px;
+    margin-bottom: 0;
+  }
+
+  .paragraphs {
+    margin-bottom: 0;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  p {
+    text-align: left;
+  }
+
+  .mid button {
+    width: 115px;
+    height: 38px;
+    line-height: 26px;
+    margin-top: 46px;
+    margin-bottom: 100px;
+  }
+
+  .bottom button {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    background: #39c2d7;
+    border-radius: 100px;
+    border: none;
+    color: white;
+    font-size: 47px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    height: 250px;
+  }
+
+  .project-and-logo {
+    justify-content: center;
+  }
+
+  .address {
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .email {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  .email:link {
+    text-decoration: none;
+  }
+
+  .rights {
+    margin-top: 20px;
+    width: 245px;
+    align-self: center;
+  }
 }
