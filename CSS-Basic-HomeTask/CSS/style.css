@@ -8,7 +8,7 @@ body {
 
 .top {
   /* position: relative; */
-  background-image: url("/htmlandcss/assets/desktop-background.png");
+  background-image: url("/CSS-Basic-HomeTask/assets/desktop-background.png");
   background-position: right;
   background-size: 1315px 822px;
   height: 800px;
@@ -191,7 +191,7 @@ p {
 .bottom {
   position: relative;
   height: 666px;
-  background-image: url("/htmlandcss/assets/background2.png");
+  background-image: url("/CSS-Basic-HomeTask/assets/background2.png");
   background-position: center;
   background-size: auto 666px;
 }
