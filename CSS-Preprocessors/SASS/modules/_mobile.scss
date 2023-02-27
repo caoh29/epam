@@ -1,0 +1,124 @@
+@media (max-width: $device-width) {
+  header {
+    .header__title {
+      margin-left: 25px;
+      margin-top: 0;
+    }
+
+    .header__menu--compressed {
+      visibility: hidden;
+    }
+
+    .header__nav__mobile {
+      width: 22px;
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      right: 25px;
+      top: 0;
+
+      .header__line {
+        background-color: $white;
+        flex: 0 0 3px;
+      }
+
+      .line1 {
+        margin-top: 50px;
+        margin-bottom: 3px;
+      }
+
+      .line2 {
+        margin-bottom: 3px;
+      }
+    }
+  }
+
+  .main {
+    box-sizing: border-box;
+    height: 990px;
+
+    .main__title {
+      margin-top: 65px;
+      width: 355px;
+      margin-bottom: 0;
+    }
+
+    .main__subtitle {
+      margin-top: 40px;
+      margin-bottom: 0;
+    }
+
+    .main__paragraphs {
+      margin-bottom: 0;
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      width: 90%;
+      margin-left: 5%;
+      margin-right: 5%;
+
+      p {
+        text-align: left;
+
+        &:last-of-type {
+          margin-top: 25px;
+        }
+      }
+    }
+
+    .main__button {
+      width: 115px;
+      height: 38px;
+      line-height: 26px;
+      margin-top: 46px;
+      margin-bottom: 100px;
+    }
+  }
+
+  .learn-more {
+    .learn-more__button {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      background: $cyan;
+      border-radius: 100px;
+      border: none;
+      color: $white;
+      font-size: 47px;
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+  }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    padding-top: 60px;
+    height: 250px;
+
+    .footer__logo-name {
+      justify-content: center;
+    }
+
+    .footer__address {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .footer__email {
+      margin-top: 20px;
+      text-align: center;
+
+      &:link {
+        text-decoration: none;
+      }
+    }
+
+    .footer__rights {
+      margin-top: 20px;
+      width: 245px;
+      align-self: center;
+    }
+  }
+}
