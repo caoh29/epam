@@ -51,9 +51,7 @@ function rangeSum (num1, num2) {
             (_, index) => start + (index * step)
         );
     
-    let tempArr = range(num1, num2);
-    
-    const resultArr = tempArr.reduce((a, b) => a + b, 0);
+    const resultArr = range(num1, num2).reduce((a, b) => a + b, 0);
 
     return resultArr;
 }
