@@ -53,7 +53,7 @@ function rangeSum (num1, num2) {
             (_, index) => start + (index * step)
         );
     
-    //Creates an array based on range function then is reduce 
+    //Creates an array based on range function then it is reduced to the sum of each element inside the array  
     const result = range(num1, num2).reduce((a, b) => a + b, 0);
 
     return result;
