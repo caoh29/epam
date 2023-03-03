@@ -45,15 +45,18 @@ function evenOrOdd (num1, num2) {
 }
 
 function rangeSum (num1, num2) {
+
+    // Creates a function called range which creates an array from the respectively values
     const range = (start, stop, step=1) =>
         Array.from(
             { length: (stop - start) / step + 1 },
             (_, index) => start + (index * step)
         );
     
-    const resultArr = range(num1, num2).reduce((a, b) => a + b, 0);
+    //Creates an array based on range function then is reduce 
+    const result = range(num1, num2).reduce((a, b) => a + b, 0);
 
-    return resultArr;
+    return result;
 }
 
 
