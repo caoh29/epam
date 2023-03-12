@@ -13,8 +13,6 @@ function createCounter(num = 0) {
 
 function multiply(num1) {
 
-
-
   const counter = function (num2) {
 
     const multiplication = function (num3) {

@@ -12,6 +12,14 @@ class Guest {
     getTask(index) {
         return { name: this.tasks[index].name };
     }
+
+    createTask() {
+        throw new Error("method 'createTask' is not defined");
+    }
+
+    changeType() {
+        throw new Error("method 'changeType' is not defined");
+    }
 }
 
 class User {
@@ -25,6 +33,10 @@ class User {
 
     createTask(task) {
         this.tasks.push(task);
+    }
+
+    changeType() {
+        throw new Error("method 'changeType' is not defined");
     }
 }
 
