@@ -162,7 +162,7 @@ p {
   width: 100%;
 }
 
-button {
+button, #dynamic__submit {
   background: #39c2d7;
   border: none;
   color: #ffffff;
