@@ -1,4 +1,4 @@
-import sum from './module';
+import sum from './modulemodule';
 
 const number = sum(10, 15);
 
