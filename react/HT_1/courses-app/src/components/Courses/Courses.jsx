@@ -30,7 +30,7 @@ const mockedCoursesList = [
         id: Math.floor(Math.random() * 100),
         title: 'Angular',
         description: 'Google\'s framework for building user interfaces',
-        authors : ['Jordan Walke', 'Dan Abramov', 'Kent C. Dodds'],
+        authors : ['Dan Abramov', 'Kent C. Dodds'],
         duration: getDuration(),
         creation: getCreation(),
     },

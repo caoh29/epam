@@ -51,10 +51,11 @@ function CourseCard (props) {
         <Card id={props.id}>
             <Title>{props.title ? props.title : 'Title'}</Title>
             <Description>{props.description ? props.description : 'Description'}</Description>
-            <Authors><b>Authors: </b>{props.authors ? 
-                props.authors.map(author => {
-                    return <span>{author}, </span>
-                }) : 'Authors'}
+            <Authors><b>Authors: </b>{props.authors ?
+                props.authors.length > 2 ?
+                    `${props.authors[0]}, ${props.authors[1]} ...` :
+                    `${props.authors[0]}, ${props.authors[1]}`
+                : 'Authors'}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'}</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
