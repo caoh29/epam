@@ -64,15 +64,17 @@ function CourseCard (props) {
         ),
     }));
 
+    const filteredCourses = coursesWithAuthors.filter((course) => course.title === props.title)[0];
+
     return (
         <Card id={props.id}>
             <Title>{props.title ? props.title : 'Title'}</Title>
             <Description>{props.description ? props.description : 'Description'}</Description>
             <Authors><b>Authors: </b>{props.authors ?
                 props.authors.length > 2 ?
-                    `${coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[0].name}, ${coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[1] ? coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[1].name : 'Unknown'} ...` :
-                    `${coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[0].name}, ${coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[1] ? coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[1].name : 'Unknown'}`
-                : props.authors.length === 1  ? `${coursesWithAuthors.filter((course) => course.title === props.title)[0].authors[0].name}` : 'Unknown'}
+                    `${filteredCourses.authors[0].name}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'} ...` :
+                    `${filteredCourses.authors[0].name}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'}`
+                : props.authors.length === 1  ? `${filteredCourses.authors[0].name}` : 'Unknown'}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} hours</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
