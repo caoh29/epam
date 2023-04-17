@@ -16,6 +16,10 @@ function CourseCard (props) {
         height: ${props.height ? props.height : 'auto'};
         margin: ${props.margin ? props.margin : '20px 0'};
 
+        @media (min-width: 1280px) { 
+            justify-items: center;
+        }
+
         @media (max-width: 1000px) { 
             column-gap: 100px;
         }
