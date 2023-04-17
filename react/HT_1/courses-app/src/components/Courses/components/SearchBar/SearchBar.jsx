@@ -1,23 +1,37 @@
 import styled from "styled-components";
+import { useState } from "react";
 import Input from "../../../../common/Input/Input";
 import Button from "../../../../common/Button/Button";
 
+const SearchBarContainer = styled.div`
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+`;
+
 function SearchBar (props) {
 
-    const Container = styled.div`
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        padding-top: 2%;
-        padding-bottom: 2%;
-    `;
+    const [inputValue, setInputValue] = useState("");
+
+    const  inputChangeHandler = (e) => {
+        setInputValue(e.target.value);
+    };
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        console.log(inputValue);
+    };
 
     return (
-        <Container>
-            <Input key={Math.floor(Math.random() * 1000)} margin="0 20px 0 0" name="courseName" id="courseName" type="text" placeHolder="Enter course name..." height="30px" width="300px" onChange={props.onChange} value={props.value}></Input>
-            <Button key={Math.floor(Math.random() * 1000)} width="100px">Search</Button>
-        </Container>
-        );
+        <SearchBarContainer>
+            <form onSubmit={submitHandler}>
+                <Input margin="0 20px 0 0" name="courseName" id="courseName" type="text" placeHolder="Enter course name..." height="30px" width="300px" onChange={inputChangeHandler} value={inputValue}/>
+                <Button width="100px" type="submit">Search</Button>
+            </form>
+        </SearchBarContainer>
+    );
 }
 
 export default SearchBar;
