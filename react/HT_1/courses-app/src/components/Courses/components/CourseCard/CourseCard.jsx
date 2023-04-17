@@ -72,8 +72,8 @@ function CourseCard (props) {
             <Description>{props.description ? props.description : 'Description'}</Description>
             <Authors><b>Authors: </b>{props.authors ?
                 props.authors.length > 2 ?
-                    `${filteredCourses.authors[0].name}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'} ...` :
-                    `${filteredCourses.authors[0].name}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'}`
+                    `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'} ...` :
+                    `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'}`
                 : props.authors.length === 1  ? `${filteredCourses.authors[0].name}` : 'Unknown'}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} hours</Duration>
