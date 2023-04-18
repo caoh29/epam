@@ -27,7 +27,7 @@ function Courses (props) {
         <CoursesContainer>
             <CoursesNavContainer>
                 <SearchBar setCourses={setCourses}/>
-                <Button width="140px" margin="0 0 0 auto">Add new course</Button>
+                <Button width="140px" margin="0 0 0 auto" onClick={props.onAddNewCourseClick}>Add new course</Button>
             </CoursesNavContainer>
             {courses.map((course) => { 
                 return <CourseCard key={course.id} id={course.id} title={course.title} description={course.description} authors={course.authors} duration={course.duration} creation={course.creationDate}/>
