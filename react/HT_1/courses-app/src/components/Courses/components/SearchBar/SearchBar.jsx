@@ -7,9 +7,6 @@ import constants from "../../../../constants.js";
 const SearchBarContainer = styled.div`
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
-    padding-top: 1%;
-    padding-bottom: 1%;
 `;
 
 function SearchBar (props) {
@@ -20,9 +17,22 @@ function SearchBar (props) {
         setInputValue(e.target.value);
     };
 
+    const checkValues = (x, y) => {
+        if (!x && !y) {
+            return false;
+        } else {
+            return x && y ? x : x || y;
+        }
+    }
+
     const search = (value) => {
-        const filteredCourses = constants.mockedCoursesList.filter(course => course.title.toLowerCase().includes(value.toLowerCase())).length > 0 && constants.mockedCoursesList.filter(course => course.title.toLowerCase().includes(value.toLowerCase()));
-        console.log(filteredCourses);
+        const filteredCoursesByTitle = constants.mockedCoursesList.filter(course => course.title.toLowerCase().includes(value.toLowerCase())).length > 0 && constants.mockedCoursesList.filter(course => course.title.toLowerCase().includes(value.toLowerCase()));
+        const filteredCoursesById = constants.mockedCoursesList.filter(course => course.id.toLowerCase().includes(value.toLowerCase())).length > 0 && constants.mockedCoursesList.filter(course => course.id.toLowerCase().includes(value.toLowerCase()));
+
+        const filteredCourses = checkValues(filteredCoursesByTitle, filteredCoursesById);
+        if (filteredCourses) {
+            props.setCourses(filteredCourses);
+        }
     };
 
     const submitHandler = (e) => {
