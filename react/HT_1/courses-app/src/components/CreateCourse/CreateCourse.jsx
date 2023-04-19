@@ -104,7 +104,7 @@ function CreateCourse (props) {
             </GridContainer2x2>
             <Label htmlFor="TextArea" margin="20px 0 0 0">Description</Label>
             <TextArea id="TextArea" defaultValue="Enter description"/>
-            <GridContainer2x2 padding="1rem" borderColor="black" margin="1rem 0" rowGap="3rem" columnGap="8rem">
+            <GridContainer2x2 padding="1rem" borderColor="black" margin="2rem 0" rowGap="3rem" columnGap="8rem">
                 <CellContainer display="flex" flexDirection="column" gridColumn="1" gridRow="1">
                     <h3>Add author</h3>
                     <Input
