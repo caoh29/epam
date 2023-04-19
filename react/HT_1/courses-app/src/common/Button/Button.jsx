@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Btn = styled.button`
     border-radius: 5%;
-    padding: 10px;
+    padding: ${props => props.padding ? props.padding : "10px"};
     cursor: pointer;
     align-self: center;
     justify-self: ${props => props.justifySelf ? props.justifySelf : "center"};
@@ -19,7 +19,8 @@ const Btn = styled.button`
 
 function Button (props) {
     return (
-        <Btn 
+        <Btn
+            padding={props.padding}
             justifySelf={props.justifySelf} 
             margin={props.margin} 
             gridColumn={props.gridColumn} 
