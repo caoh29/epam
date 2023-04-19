@@ -8,7 +8,7 @@ function App() {
 
   const [showCreateCourse, setShowCreateCourse] = useState(false);
 
-  const AddNewCourseHandler =() => {
+  const AddNewCourseClickHandler = () => {
     setShowCreateCourse(true);
   }
 
@@ -18,7 +18,7 @@ function App() {
       {showCreateCourse ? (
         <CreateCourse />
       ) : (
-        <Courses onAddNewCourseClick={AddNewCourseHandler} />
+        <Courses onAddNewCourseClick={AddNewCourseClickHandler} />
       )}
     </div>
   )

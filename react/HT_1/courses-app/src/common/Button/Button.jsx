@@ -5,7 +5,7 @@ const Btn = styled.button`
     padding: 10px;
     cursor: pointer;
     align-self: center;
-    justify-self: center;
+    justify-self: ${props => props.justifySelf ? props.justifySelf : "center"};
     text-align: center;
     margin: ${props => props.margin ? props.margin : "0"};
     width: ${props => props.width ? props.width : "75px"};
@@ -18,7 +18,21 @@ const Btn = styled.button`
 `;
 
 function Button (props) {
-    return (<Btn margin={props.margin} gridColumn={props.gridColumn} gridRow={props.gridRow} width={props.width} height={props.height} borderColor={props.borderColor} backgroundColor={props.backgroundColor} color={props.color} onClick={props.onClick}>{props.children}</Btn >);
+    return (
+        <Btn 
+            justifySelf={props.justifySelf} 
+            margin={props.margin} 
+            gridColumn={props.gridColumn} 
+            gridRow={props.gridRow} 
+            width={props.width} 
+            height={props.height} 
+            borderColor={props.borderColor} 
+            backgroundColor={props.backgroundColor} 
+            color={props.color} 
+            onClick={props.onClick}>
+                {props.children}
+        </Btn >
+    );
 }
 
 
