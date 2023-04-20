@@ -207,18 +207,6 @@ function CreateCourse (props) {
                             </form>
                         );
                     })}
-                    {/* <CellContainer display="flex">
-                        <Label margin="0 100px 0 0" alignSelf="center">
-                            Author
-                        </Label>
-                        <Button
-                            width="150px"
-                            height="30px"
-                            padding="0"
-                            onClick={() => {}}>
-                                Delete author
-                        </Button>
-                    </CellContainer> */}
                 </CellContainer>
             </GridContainer2x2>
         </CreateCourseContainer>
