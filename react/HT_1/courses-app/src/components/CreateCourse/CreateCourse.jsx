@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import constants from "../../constants";
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
 
 const CreateCourseContainer = styled.div`
@@ -67,18 +68,48 @@ const TextArea = styled.textarea`
     ${props => props.alignSelf ? `align-self: ${props.alignSelf};` : ""}
 `;
 
-const Paragrapgh = styled.p`
-    padding: 0;
-    color: ${props => props.color ? props.color : "black"};
-    font-size: ${props => props.fontSize ? props.fontSize : "1em"};
-    margin: ${props => props.margin ? props.margin : "0"};
-    text-align: ${props => props.textAlign ? props.textAlign : "left"};
-    ${props => props.gridColumn ? `grid-column: ${props.gridColumn};` : ""}
-    ${props => props.gridRow ? `grid-row: ${props.gridRow};` : ""}
-    ${props => props.alignSelf ? `align-self: ${props.alignSelf};` : ""}
-`;
-
 function CreateCourse (props) {
+
+    let authorsList;
+    let courseAuthorsList;
+
+    const [authors, setAuthors] = useState(constants.mockedAuthorsList);
+    const [authorsInputValue, setAuthorsInputValue] = useState("");
+    const [courseAuthors, setCourseAuthors] = useState("Authors list is empty");
+
+    const  inputChangeHandler = (e) => {
+        setAuthorsInputValue(e.target.value);
+    };
+
+    const createAuthorHandler = () => {
+        if (authorsInputValue.length >= 2) {
+            constants.mockedAuthorsList.push({
+                id: uuidv4(),
+                name: authorsInputValue.toString()
+            })
+            setAuthorsInputValue('');
+        }
+    };
+
+    const addAuthorHandler = (e) => {
+        e.preventDefault();
+        console.log(constants.mockedAuthorsList.filter(el => el.name === e.target.firstChild.firstChild.textContent)[0].id);
+        console.log(authorsList);
+        setCourseAuthors([{
+            id: constants.mockedAuthorsList.filter(el => el.name === e.target.firstChild.firstChild.textContent)[0].id,
+            name: e.target.firstChild.firstChild.textContent
+        }]);
+        // console.log(courseAuthors);
+        // const index = authorsList.findIndex(el =>  el.name === e.target.firstChild.firstChild.textContent)
+        // authorsList.splice(index, index);
+        // setAuthors(authorsList);
+    };
+
+    const deleteAuthorHandler = (e) => {
+        e.preventDefault();
+        console.log(courseAuthorsList);
+        setAuthors(e.target)
+    };
 
     return (
         <CreateCourseContainer>
@@ -112,11 +143,13 @@ function CreateCourse (props) {
                         borderColor="brown"
                         width="90%"
                         placeHolder="Enter author name..."
+                        onChange={inputChangeHandler} 
+                        value={authorsInputValue}
                     />
                     <Button
                         width="150px"
                         margin="1rem 0 0 0"
-                        onClick={() => {}}>
+                        onClick={createAuthorHandler}>
                             Create author
                     </Button>
                 </CellContainer>
@@ -128,31 +161,56 @@ function CreateCourse (props) {
                         width="90%"
                         placeHolder="Enter duration in minutes..."
                     />
-                    <Paragrapgh fontSize="1.5em" margin="1rem 0 0 0">
+                    <Label fontSize="1.5em" margin="1rem 0 0 0">
                         Duration: <span><b>00:00</b></span> hours
-                    </Paragrapgh>
+                    </Label>
                 </CellContainer>
                 <CellContainer display="flex" flexDirection="column" gridColumn="2" gridRow="1">
                     <h3>Authors</h3>
-                    <CellContainer display="flex">
-                        <Paragrapgh margin="0 100px 0 0" alignSelf="center">
-                            Author
-                        </Paragrapgh>
-                        <Button
-                            width="150px"
-                            height="30px"
-                            padding="0"
-                            onClick={() => {}}>
-                                Add author
-                        </Button>
-                    </CellContainer>
+                    {authorsList = authors.map(author => {
+                        return (
+                            <form key={author.id} onSubmit={addAuthorHandler}>
+                                <CellContainer display="flex" margin="1rem 0">
+                                    <Label margin="0 auto 0 0" alignSelf="center" width="auto">
+                                        {author.name}
+                                    </Label>
+                                    <Button
+                                        width="150px"
+                                        height="30px"
+                                        padding="0"
+                                        justifySelf="end">
+                                            Add author
+                                    </Button>
+                                </CellContainer>
+                            </form>
+                        );
+                    })}
+
                 </CellContainer>
                 <CellContainer display="flex" flexDirection="column" gridColumn="2" gridRow="2">
                     <h3>Course authors</h3>
-                    <CellContainer display="flex">
-                        <Paragrapgh margin="0 100px 0 0" alignSelf="center">
+                    {typeof courseAuthors === "string" ? <Label textAlign="center" width="auto">{courseAuthors}</Label> : courseAuthorsList = courseAuthors.map(author => {
+                        return (
+                            <form key={author.id} onSubmit={deleteAuthorHandler}>
+                                <CellContainer display="flex" margin="1rem 0">
+                                    <Label margin="0 auto 0 0" alignSelf="center" width="auto">
+                                        {author.name}
+                                    </Label>
+                                    <Button
+                                        width="150px"
+                                        height="30px"
+                                        padding="0"
+                                        justifySelf="end">
+                                            Delete author
+                                    </Button>
+                                </CellContainer>
+                            </form>
+                        );
+                    })}
+                    {/* <CellContainer display="flex">
+                        <Label margin="0 100px 0 0" alignSelf="center">
                             Author
-                        </Paragrapgh>
+                        </Label>
                         <Button
                             width="150px"
                             height="30px"
@@ -160,7 +218,7 @@ function CreateCourse (props) {
                             onClick={() => {}}>
                                 Delete author
                         </Button>
-                    </CellContainer>
+                    </CellContainer> */}
                 </CellContainer>
             </GridContainer2x2>
         </CreateCourseContainer>
