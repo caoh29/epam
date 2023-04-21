@@ -29,7 +29,7 @@ function Button (props) {
             height={props.height} 
             borderColor={props.borderColor} 
             backgroundColor={props.backgroundColor} 
-            color={props.color} 
+            color={props.color}
             onClick={props.onClick}>
                 {props.children}
         </Btn >

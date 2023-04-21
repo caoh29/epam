@@ -70,12 +70,11 @@ const TextArea = styled.textarea`
 
 function CreateCourse (props) {
 
-    let authorsList;
-    let courseAuthorsList;
-
     const [authors, setAuthors] = useState(constants.mockedAuthorsList);
     const [authorsInputValue, setAuthorsInputValue] = useState("");
-    const [courseAuthors, setCourseAuthors] = useState("Authors list is empty");
+    const [courseAuthors, setCourseAuthors] = useState([]);
+    const [durationInputValue, setDurationInputValue] = useState(0);
+    const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
 
     const  inputChangeHandler = (e) => {
         setAuthorsInputValue(e.target.value);
@@ -83,32 +82,46 @@ function CreateCourse (props) {
 
     const createAuthorHandler = () => {
         if (authorsInputValue.length >= 2) {
-            constants.mockedAuthorsList.push({
-                id: uuidv4(),
-                name: authorsInputValue.toString()
-            })
+
+            setAuthors(
+                [...authors, {
+                    id: uuidv4(),
+                    name: authorsInputValue.toString()
+                }]
+            );
             setAuthorsInputValue('');
         }
     };
 
     const addAuthorHandler = (e) => {
         e.preventDefault();
-        console.log(constants.mockedAuthorsList.filter(el => el.name === e.target.firstChild.firstChild.textContent)[0].id);
-        console.log(authorsList);
-        setCourseAuthors([{
-            id: constants.mockedAuthorsList.filter(el => el.name === e.target.firstChild.firstChild.textContent)[0].id,
-            name: e.target.firstChild.firstChild.textContent
-        }]);
-        // console.log(courseAuthors);
-        // const index = authorsList.findIndex(el =>  el.name === e.target.firstChild.firstChild.textContent)
-        // authorsList.splice(index, index);
-        // setAuthors(authorsList);
+
+        setCourseAuthors([...authors.filter(el => el.name === e.target.firstChild.firstChild.textContent), ...courseAuthors]);
+
+        setAuthors(
+            authors.filter(el => el.name !== e.target.firstChild.firstChild.textContent)
+        );
     };
 
     const deleteAuthorHandler = (e) => {
         e.preventDefault();
-        console.log(courseAuthorsList);
-        setAuthors(e.target)
+
+        setAuthors(
+            [...courseAuthors.filter(el => el.name === e.target.firstChild.firstChild.textContent), ...authors]
+        );
+        setCourseAuthors(
+            courseAuthors.filter(el => el.name !== e.target.firstChild.firstChild.textContent)
+        );
+    };
+
+    const durationChangeHandler = (e) => {
+        if (e.target.value > 0){
+            setDurationInputValue(e.target.value);
+
+            const hours = Math.floor(e.target.value / 60);
+            const minutes = e.target.value % 60;
+            setDurationMinutesHours(("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2));
+        }
     };
 
     return (
@@ -160,14 +173,17 @@ function CreateCourse (props) {
                         borderColor="brown"
                         width="90%"
                         placeHolder="Enter duration in minutes..."
+                        type="number"
+                        onChange={durationChangeHandler} 
+                        value={durationInputValue === 0 ? "Enter duration in minutes..." : durationInputValue}
                     />
-                    <Label fontSize="1.5em" margin="1rem 0 0 0">
-                        Duration: <span><b>00:00</b></span> hours
+                    <Label fontSize="1.5em" margin="1rem 0 0 0" width="auto">
+                        Duration: <span><b>{durationMinutesHours}</b></span> hours
                     </Label>
                 </CellContainer>
                 <CellContainer display="flex" flexDirection="column" gridColumn="2" gridRow="1">
                     <h3>Authors</h3>
-                    {authorsList = authors.map(author => {
+                    {authors.length === 0 ? <Label textAlign="center" width="auto">Authors list is empty</Label> : authors.map(author => {
                         return (
                             <form key={author.id} onSubmit={addAuthorHandler}>
                                 <CellContainer display="flex" margin="1rem 0">
@@ -185,11 +201,10 @@ function CreateCourse (props) {
                             </form>
                         );
                     })}
-
                 </CellContainer>
                 <CellContainer display="flex" flexDirection="column" gridColumn="2" gridRow="2">
                     <h3>Course authors</h3>
-                    {typeof courseAuthors === "string" ? <Label textAlign="center" width="auto">{courseAuthors}</Label> : courseAuthorsList = courseAuthors.map(author => {
+                    {courseAuthors.length === 0 ? <Label textAlign="center" width="auto">Course authors list is empty</Label> : courseAuthors.map(author => {
                         return (
                             <form key={author.id} onSubmit={deleteAuthorHandler}>
                                 <CellContainer display="flex" margin="1rem 0">
