@@ -154,17 +154,13 @@ function CreateCourse (props) {
                     id: el.id,
                     name: el.name
                 };
-                console.log(newAuthor);
-                console.log(constants.mockedAuthorsList);
-                console.log(!constants.mockedAuthorsList.includes(newAuthor));
-                if(!constants.mockedAuthorsList.includes(newAuthor)){
+
+                if(!constants.mockedAuthorsList.some(el => el.id === newAuthor.id)){
                     constants.mockedAuthorsList.push(newAuthor);
                 }
             });
 
             constants.mockedCoursesList.push(newCourse);
-
-            console.log(constants.mockedAuthorsList);
 
             props.onCreateCourseClick();
         } else {
@@ -231,7 +227,7 @@ function CreateCourse (props) {
                         placeHolder="Enter duration in minutes..."
                         type="number"
                         onChange={durationChangeHandler} 
-                        value={durationInputValue === 0 ? "Enter duration in minutes..." : durationInputValue}
+                        value={durationInputValue}
                     />
                     <Label fontSize="1.5em" margin="1rem 0 0 0" width="auto">
                         Duration: <span><b>{durationMinutesHours}</b></span> hours
