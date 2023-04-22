@@ -70,11 +70,21 @@ const TextArea = styled.textarea`
 
 function CreateCourse (props) {
 
-    const [authors, setAuthors] = useState(constants.mockedAuthorsList);
+    const [titleInputValue, setTitleInputValue] = useState("");
+    const [textAreaValue, setTextAreaValue] = useState("");
     const [authorsInputValue, setAuthorsInputValue] = useState("");
+    const [authors, setAuthors] = useState(constants.mockedAuthorsList);
     const [courseAuthors, setCourseAuthors] = useState([]);
     const [durationInputValue, setDurationInputValue] = useState(0);
     const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
+
+    const titleChangeHandler = (e) =>  {
+        setTitleInputValue(e.target.value);
+    };
+
+    const textAreaChangeHandler = (e) =>  {
+        setTextAreaValue(e.target.value);
+    };
 
     const  inputChangeHandler = (e) => {
         setAuthorsInputValue(e.target.value);
@@ -124,6 +134,44 @@ function CreateCourse (props) {
         }
     };
 
+
+    const createCourseClickHandler = () => {
+
+        const check = titleInputValue.length > 0 && textAreaValue.length >= 2 && courseAuthors.length > 0 && durationInputValue >= 1;
+
+        if (check) {
+            const newCourse = {
+                id:  uuidv4(),
+                title: titleInputValue,
+                description: textAreaValue,
+                creationDate: `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
+                duration: durationInputValue,
+                authors: courseAuthors.map(el => el.id)
+            };
+
+            courseAuthors.forEach(el => {
+                const newAuthor = {
+                    id: el.id,
+                    name: el.name
+                };
+                console.log(newAuthor);
+                console.log(constants.mockedAuthorsList);
+                console.log(!constants.mockedAuthorsList.includes(newAuthor));
+                if(!constants.mockedAuthorsList.includes(newAuthor)){
+                    constants.mockedAuthorsList.push(newAuthor);
+                }
+            });
+
+            constants.mockedCoursesList.push(newCourse);
+
+            console.log(constants.mockedAuthorsList);
+
+            props.onCreateCourseClick();
+        } else {
+            alert("Please, fill all fields");
+        }
+    };
+
     return (
         <CreateCourseContainer>
             <GridContainer2x2>
@@ -135,19 +183,26 @@ function CreateCourse (props) {
                     gridColumnInput="1" 
                     gridRowInput="2" 
                     placeHolder="Enter title..." 
-                    borderColor="brown">
+                    borderColor="brown"
+                    type="text"
+                    onChange={titleChangeHandler} 
+                    value={titleInputValue}>
                 </Input>
                 <Button
                     gridColumn="2"
                     gridRow="2"
                     width="150px"
                     justifySelf="end"
-                    onClick={() => {}}>
+                    onClick={createCourseClickHandler}>
                         Create course
                 </Button>
             </GridContainer2x2>
             <Label htmlFor="TextArea" margin="20px 0 0 0">Description</Label>
-            <TextArea id="TextArea" defaultValue="Enter description"/>
+            <TextArea 
+                id="TextArea" 
+                placeholder="Enter description"
+                onChange={textAreaChangeHandler} 
+                value={textAreaValue}/>
             <GridContainer2x2 padding="1rem" borderColor="black" margin="2rem 0" rowGap="3rem" columnGap="8rem">
                 <CellContainer display="flex" flexDirection="column" gridColumn="1" gridRow="1">
                     <h3>Add author</h3>
@@ -156,6 +211,7 @@ function CreateCourse (props) {
                         borderColor="brown"
                         width="90%"
                         placeHolder="Enter author name..."
+                        type="text"
                         onChange={inputChangeHandler} 
                         value={authorsInputValue}
                     />

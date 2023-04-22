@@ -10,13 +10,17 @@ function App() {
 
   const AddNewCourseClickHandler = () => {
     setShowCreateCourse(true);
-  }
+  };
+
+  const CreateCourseClickHandler = () => {
+    setShowCreateCourse(false);
+  };
 
   return (
     <div className="App">
       <Header/>
       {showCreateCourse ? (
-        <CreateCourse />
+        <CreateCourse onCreateCourseClick={CreateCourseClickHandler}/>
       ) : (
         <Courses onAddNewCourseClick={AddNewCourseClickHandler} />
       )}
