@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import Input from "../../../../courses-app-frontend/src/common/Input/Input";
 import Button from "../../../../courses-app-frontend/src/common/Button/Button";
-import { Link } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { loginUser } from "../../../../courses-app-frontend/src/api/loginUser.api";
 
 const LoginContainer = styled.div`
     display: flex;
@@ -13,10 +15,34 @@ const LoginContainer = styled.div`
 `;
 
 export function Login () {
+
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    const submitHandler = (e) => {
+        e.preventDefault();
+        
+        if(password !== '' && password.length >= 6 && password.length <= 20 && email !== '' && email.includes('@') && email.includes('.com') && email.length >= 5 && email.length <= 30 ){ 
+            (async () => {
+                const response = await loginUser(email, password);
+                if (response.status === 201){
+                    navigate('/courses');
+                } else {
+                    alert(`There was a problem with login, status code ${response.status}`);
+                }
+            })();
+        } else {
+            alert('Fill all fields');
+        }
+    }
+
     return (
         <LoginContainer>
             <h2>Login</h2>
-            <form>
+            <form onSubmit={submitHandler}>
                 <LoginContainer>
                     <Input 
                         labelText="Email" 
@@ -24,7 +50,9 @@ export function Login () {
                         id="email" 
                         width="auto" 
                         placeHolder="Enter email" 
-                        margin="10px 0 20px 0" 
+                        margin="10px 0 20px 0"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} 
                         required
                     />
                     <Input 
@@ -33,7 +61,9 @@ export function Login () {
                         id="password" 
                         width="auto" 
                         placeHolder="Enter password" 
-                        margin="10px 0 20px 0" 
+                        margin="10px 0 20px 0"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}  
                         required
                     />
                     <Button width="150px">Login</Button>
