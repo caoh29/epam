@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Input from "../../../../courses-app-frontend/src/common/Input/Input";
 import Button from "../../../../courses-app-frontend/src/common/Button/Button";
-import { Link } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { registerUser } from "../../../../courses-app-frontend/src/api/registerUser.api";
 
@@ -20,11 +20,20 @@ export function Registration () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const navigate = useNavigate();
+
     const submitHandler = (e) => {
         e.preventDefault();
         
         if(name !== '' && name.length <= 30 && name.length >= 3 && password !== '' && password.length >= 6 && password.length <= 20 && email !== '' && email.includes('@') && email.includes('.com') && email.length >= 5 && email.length <= 30 ){ 
-            registerUser(name, email, password);
+            (async () => {
+                const response = await registerUser(name, email, password);
+                if (response.status === 201){
+                    navigate('/login');
+                } else {
+                    alert(`There was a problem with registration, status code ${response.status}`);
+                }
+            })();
         } else {
             alert('Fill all fields');
         }

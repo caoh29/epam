@@ -13,11 +13,14 @@ export const registerUser = (name, email, password) => {
         password: password
     };
 
-    axios.post(apiUrl, data, { headers })
+    const response = axios.post(apiUrl, data, { headers })
         .then(function (response) {
-            console.log(response);
+            return response;
         }).catch(function (error) {
             console.log(error);
+            return error;
         }
     );
+
+    return response;
 };
