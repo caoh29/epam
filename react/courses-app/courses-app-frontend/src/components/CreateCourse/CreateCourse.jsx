@@ -4,6 +4,7 @@ import Button from "../../common/Button/Button";
 import constants from "../../constants";
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateCourseContainer = styled.div`
     display: flex;
@@ -77,6 +78,8 @@ function CreateCourse (props) {
     const [courseAuthors, setCourseAuthors] = useState([]);
     const [durationInputValue, setDurationInputValue] = useState(0);
     const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
+
+    const navigate = useNavigate();
 
     const titleChangeHandler = (e) =>  {
         setTitleInputValue(e.target.value);
@@ -162,7 +165,7 @@ function CreateCourse (props) {
 
             constants.mockedCoursesList.push(newCourse);
 
-            props.onCreateCourseClick();
+            navigate("/courses");
         } else {
             alert("Please, fill all fields");
         }
