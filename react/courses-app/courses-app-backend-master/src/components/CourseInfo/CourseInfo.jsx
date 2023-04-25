@@ -13,7 +13,7 @@ const CourseInfoContainer = styled.div`
     justify-content: center;
     width: auto;
     padding: 2%;
-    border: 3px solid blue;
+    border: 3px solid cyan;
     margin-top: 2%;
 `;
 
