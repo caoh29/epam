@@ -14,6 +14,7 @@ const CourseInfoContainer = styled.div`
     width: auto;
     padding: 2%;
     border: 3px solid blue;
+    margin-top: 2%;
 `;
 
 const BackToCoursesContainer = styled.div`
@@ -25,10 +26,11 @@ const BackToCoursesContainer = styled.div`
 
 const BodyContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 50px;
+    grid-template-columns: 1.25fr 0.75fr;
+    column-gap: 150px;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
+    text-align: start;
     width: auto;
     padding: 2%;
 `;
@@ -49,11 +51,15 @@ export function CourseInfo () {
                     <p>{location.state.description}</p>
                     <p>
                         <b>ID:</b>{location.state.id}<br/>
-                        <b>Duration:</b>{location.state.duration}<br/>
-                        <b>Created:</b>{location.state.creation}<br/>
+                        <b>Duration:</b>{location.state.duration.split(' ')[1]}<br/>
+                        <b>Created:</b>{location.state.creation.split(' ')[1]}<br/>
                         <b>Authors:</b><br/>
-                        {location.state.authors}<br/>
-                        {location.state.authors}<br/>
+                        {location.state.authors.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/).map(author => (
+                            <Fragment>
+                                {author}
+                                <br/>
+                            </Fragment>
+                        ))}
                     </p>
                 </BodyContainer>
             </CourseInfoContainer>
