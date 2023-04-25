@@ -53,9 +53,9 @@ function Header () {
         <RedContainer>
             <Logo src={PATH}/>
             <Title>COURSES</Title>
-            <Button gridColumn="11" borderColor="none">Name</Button>
+            <Button gridColumn="11" borderColor="none" width="100px">{localStorage.getItem('name')}</Button>
             <Link to="/login">
-                <Button gridColumn="12" onClick={() => localStorage.clear()}>Logout</Button>
+                <Button gridColumn="12" width="100px" onClick={() => localStorage.clear()}>Logout</Button>
             </Link>
         </RedContainer>
     );

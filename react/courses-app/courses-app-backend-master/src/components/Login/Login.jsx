@@ -28,9 +28,10 @@ export function Login () {
         if(password !== '' && password.length >= 6 && password.length <= 20 && email !== '' && email.includes('@') && email.includes('.com') && email.length >= 5 && email.length <= 30 ){ 
             (async () => {
                 const response = await loginUser(email, password);
-                console.log(response);
                 if (response.status === 201){
                     const token = response.data.result.split(' ')[1];
+                    const name = response.data.user.name;
+                    localStorage.setItem('name', name);
                     localStorage.setItem('token', token);
                     navigate('/courses');
                 } else {

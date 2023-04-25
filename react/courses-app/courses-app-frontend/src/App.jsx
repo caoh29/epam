@@ -6,7 +6,7 @@ import { useState, Fragment } from 'react';
 import { BrowserRouter, Routes,  Route, Navigate } from 'react-router-dom';
 import { Registration } from '../../courses-app-backend-master/src/components/Registration/Registration';
 import { Login } from '../../courses-app-backend-master/src/components/Login/Login';
-// import { CourseInfo } from '../../courses-app-backend-master/src/components/CourseInfo/CourseInfo';
+import { CourseInfo } from '../../courses-app-backend-master/src/components/CourseInfo/CourseInfo';
 
 
 
@@ -23,6 +23,7 @@ function App() {
     setShowCreateCourse(false);
   };
 
+
   return (
     <BrowserRouter>
       <Routes>
@@ -30,6 +31,7 @@ function App() {
         <Route path="/registration" element={<Registration to="/login" />} />
         <Route path="/login" element={<Login to="/courses" />} />
         <Route path="/courses" element={showCreateCourse ? (<Fragment><Header/><CreateCourse onCreateCourseClick={CreateCourseClickHandler}/></Fragment>) : (<Fragment><Header/><Courses onAddNewCourseClick={AddNewCourseClickHandler} /></Fragment>)} />
+        <Route path="/courses/:courseId" element={<CourseInfo />} />
       </Routes>
     </BrowserRouter>
   )

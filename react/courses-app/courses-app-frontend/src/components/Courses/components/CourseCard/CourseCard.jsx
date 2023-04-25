@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../../../../common/Button/Button";
 import constants from "../../../../constants";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Card = styled.div`
     display: grid;
@@ -61,6 +62,22 @@ const Creation = styled(Paragraph)`
 
 function CourseCard (props) {
 
+    const navigate = useNavigate();
+
+    const showCourseHandler = (e) => {
+
+        const courseData = {
+            title: e.target.parentNode.firstChild.textContent,
+            description: e.target.parentNode.childNodes[1].textContent,
+            authors:  e.target.parentNode.childNodes[2].textContent,
+            duration: e.target.parentNode.childNodes[3].textContent,
+            creation: e.target.parentNode.childNodes[4].textContent,
+            id: e.target.parentNode.id,
+        };
+
+        navigate(`/courses/${e.target.parentNode.id}`, {state: courseData});
+    }
+
     const coursesWithAuthors = constants.mockedCoursesList.map((course) => ({
         ...course,
         authors: course.authors.map((authorId) =>
@@ -82,7 +99,7 @@ function CourseCard (props) {
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} hours</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
-            <Button gridColumn="2" gridRow="4 " onClick={props.onClick} width="150px">Show course</Button>
+            <Button gridColumn="2" gridRow="4 " onClick={showCourseHandler} width="150px">Show course</Button>
         </Card>
     );
 }
