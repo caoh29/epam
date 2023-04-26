@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "../../../../common/Button/Button";
 import constants from "../../../../constants";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Card = styled.div`
     display: grid;

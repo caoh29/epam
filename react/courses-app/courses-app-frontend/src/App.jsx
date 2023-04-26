@@ -3,17 +3,13 @@ import Courses from './components/Courses/Courses';
 import Header from './components/Header/Header';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import { Fragment } from 'react';
-import { BrowserRouter, Routes,  Route, Navigate, useParams } from 'react-router-dom';
-import { Registration } from '../../courses-app-backend-master/src/components/Registration/Registration';
-import { Login } from '../../courses-app-backend-master/src/components/Login/Login';
-import { CourseInfo } from '../../courses-app-backend-master/src/components/CourseInfo/CourseInfo';
-
-
+import { BrowserRouter, Routes,  Route, Navigate } from 'react-router-dom';
+import Registration from './components/Registration/Registration';
+import Login from './components/Login/Login';
+import CourseInfo from './components/CourseInfo/CourseInfo';
 
 
 function App() {
-
-  // const { courseId } = useParams();
 
   return (
     <BrowserRouter>

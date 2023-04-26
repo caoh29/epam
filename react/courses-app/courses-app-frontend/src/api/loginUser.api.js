@@ -13,13 +13,8 @@ export const loginUser = (email, password) => {
     };
 
     const response = axios.post(apiUrl, data, { headers })
-        .then(function (response) {
-            return response;
-        }).catch(function (error) {
-            console.log(error);
-            return error;
-        }
-    );
+        .then((apiResponse) => apiResponse)
+        .catch((error) => error);
 
     return response;
 };
