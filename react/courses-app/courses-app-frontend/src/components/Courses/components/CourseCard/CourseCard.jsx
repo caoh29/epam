@@ -60,49 +60,77 @@ const Creation = styled(Paragraph)`
     grid-row: 3;
 `;
 
+const ButtonsContainer = styled.div`
+    display: flex;
+    gap: 20px;
+    grid-column: 2;
+    grid-row: 4;
+`;
+
 function CourseCard (props) {
 
     const courses = useStore((state) => state.courses);
     const authorsData = useStore((state) => state.authors);
+    const deleteCourse = useStore((state) => state.deleteCourse);
 
     const navigate = useNavigate();
 
     const showCourseHandler = (e) => {
 
         const courseData = {
-            title: e.target.parentNode.firstChild.textContent,
-            description: e.target.parentNode.childNodes[1].textContent,
-            authors:  e.target.parentNode.childNodes[2].textContent,
-            duration: e.target.parentNode.childNodes[3].textContent,
-            creation: e.target.parentNode.childNodes[4].textContent,
-            id: e.target.parentNode.id,
+            title: e.target.parentNode.parentNode.firstChild.textContent,
+            description: e.target.parentNode.parentNode.childNodes[1].textContent,
+            authors:  e.target.parentNode.parentNode.childNodes[2].textContent,
+            duration: e.target.parentNode.parentNode.childNodes[3].textContent,
+            creation: e.target.parentNode.parentNode.childNodes[4].textContent,
+            id: e.target.parentNode.parentNode.id,
         };
 
-        navigate(`/courses/${e.target.parentNode.id}`, {state: courseData});
+        navigate(`/courses/${e.target.parentNode.parentNode.id}`, {state: courseData});
     }
 
     const coursesWithAuthors = courses.map((course) => ({
         ...course,
+
         authors: course.authors.map((authorId) =>
             authorsData.find((author) => author.id === authorId)
         ),
     }));
 
-    const filteredCourses = coursesWithAuthors.filter((course) => course.title === props.title)[0];
+
+    const displayAuthors = () => {
+        if (coursesWithAuthors !== undefined && coursesWithAuthors.length > 0) {
+            const filteredCourses = coursesWithAuthors.filter((course) => course.title === props.title)[0];
+            if (props.authors) {
+                if (props.authors.length == 1) {
+                    return `${filteredCourses.authors[0].name}`;
+                } else if (props.authors.length == 2) {
+                    return `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'}`
+                } else if (props.authors.length > 2) {
+                    return `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'} ...`
+                } else {
+                    return 'Unknown';
+                }
+            } else {
+                return;
+            }
+        }
+    }
 
     return (
         <Card id={props.id}>
             <Title>{props.title ? props.title : 'Title'}</Title>
             <Description>{props.description ? props.description : 'Description'}</Description>
-            <Authors><b>Authors: </b>{props.authors ?
-                props.authors.length > 2 ?
-                    `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'} ...` :
-                    `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'}`
-                : props.authors.length === 1  ? `${filteredCourses.authors[0].name}` : 'Unknown'}
+            <Authors><b>Authors: </b>
+                {displayAuthors()}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} hours</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
-            <Button gridColumn="2" gridRow="4 " onClick={showCourseHandler} width="150px">Show course</Button>
+            <ButtonsContainer>
+                <Button onClick={showCourseHandler} width="150px">Show course</Button>
+                <Button onClick={() => {}} width="auto">Edit</Button>
+                <Button onClick={() => { deleteCourse(props.id) }} width="auto">Delete</Button>
+            </ButtonsContainer>
         </Card>
     );
 }

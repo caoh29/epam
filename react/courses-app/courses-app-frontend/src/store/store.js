@@ -19,6 +19,11 @@ const useStore = create((set) => ({
         const { result } = await response.json()
         set({ authors: result })
     },
+    deleteCourse: (id) => {
+        set((state) => ({
+            courses: state.courses.filter(course => course.id !== id)
+        }))
+    },
 }));
 
 export default useStore;
