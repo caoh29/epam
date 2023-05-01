@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import CourseCard from "./components/CourseCard/CourseCard";
-import constants from "../../constants";
 import SearchBar from "./components/SearchBar/SearchBar";
 import Button from "../../common/Button/Button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../store/store.js";
 
 
 const CoursesContainer = styled.div`
@@ -20,11 +20,28 @@ const CoursesNavContainer = styled.div`
     flex-wrap: nowrap;
 `;
 
+
 function Courses () {
 
-    const [courses, setCourses] = useState(constants.mockedCoursesList);
+    const coursesData = useStore((state) => state.courses);
+    const updateCourses = useStore((state) => state.updateCourses);
+    const updateAuthors = useStore((state) => state.updateAuthors);
+
+    const [courses, setCourses] = useState([]);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await updateAuthors();
+            await updateCourses();
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        setCourses(coursesData);
+    }, [coursesData]);
 
     return (
         <CoursesContainer>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Input from "../../../../common/Input/Input";
 import Button from "../../../../common/Button/Button";
-import constants from "../../../../constants.js";
+import useStore from "../../../../store/store.js";
 
 const SearchBarContainer = styled.div`
     display: flex;
@@ -10,6 +10,8 @@ const SearchBarContainer = styled.div`
 `;
 
 function SearchBar (props) {
+
+    const courses = useStore((state) => state.courses);
 
     const [inputValue, setInputValue] = useState("");
 
@@ -26,8 +28,8 @@ function SearchBar (props) {
     }
 
     const search = (value) => {
-        const filteredCoursesByTitle = constants.mockedCoursesList.filter(course => course.title.toLowerCase().includes(value.toLowerCase())).length > 0 && constants.mockedCoursesList.filter(course => course.title.toLowerCase().includes(value.toLowerCase()));
-        const filteredCoursesById = constants.mockedCoursesList.filter(course => course.id.toLowerCase().includes(value.toLowerCase())).length > 0 && constants.mockedCoursesList.filter(course => course.id.toLowerCase().includes(value.toLowerCase()));
+        const filteredCoursesByTitle = courses.filter(course => course.title.toLowerCase().includes(value.toLowerCase())).length > 0 && courses.filter(course => course.title.toLowerCase().includes(value.toLowerCase()));
+        const filteredCoursesById = courses.filter(course => course.id.toLowerCase().includes(value.toLowerCase())).length > 0 && courses.filter(course => course.id.toLowerCase().includes(value.toLowerCase()));
 
         const filteredCourses = checkValues(filteredCoursesByTitle, filteredCoursesById);
         if (filteredCourses) {

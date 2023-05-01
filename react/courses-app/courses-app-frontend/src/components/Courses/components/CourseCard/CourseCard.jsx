@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Button from "../../../../common/Button/Button";
-import constants from "../../../../constants";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../../../store/store.js";
 
 const Card = styled.div`
     display: grid;
@@ -62,6 +62,9 @@ const Creation = styled(Paragraph)`
 
 function CourseCard (props) {
 
+    const courses = useStore((state) => state.courses);
+    const authorsData = useStore((state) => state.authors);
+
     const navigate = useNavigate();
 
     const showCourseHandler = (e) => {
@@ -78,10 +81,10 @@ function CourseCard (props) {
         navigate(`/courses/${e.target.parentNode.id}`, {state: courseData});
     }
 
-    const coursesWithAuthors = constants.mockedCoursesList.map((course) => ({
+    const coursesWithAuthors = courses.map((course) => ({
         ...course,
         authors: course.authors.map((authorId) =>
-            constants.mockedAuthorsList.find((author) => author.id === authorId)
+            authorsData.find((author) => author.id === authorId)
         ),
     }));
 
