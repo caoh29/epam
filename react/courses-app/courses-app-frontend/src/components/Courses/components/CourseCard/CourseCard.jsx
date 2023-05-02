@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Button from "../../../../common/Button/Button";
 import { useNavigate } from "react-router-dom";
+import CourseAuthors from "./components/CourseAuthors/CourseAuthors";
 import useStore from "../../../../store/store.js";
 
 const Card = styled.div`
@@ -70,7 +71,7 @@ const ButtonsContainer = styled.div`
 function CourseCard (props) {
 
     const courses = useStore((state) => state.courses);
-    const authorsData = useStore((state) => state.authors);
+    const authorsList = useStore((state) => state.authors);
     const deleteCourse = useStore((state) => state.deleteCourse);
 
     const navigate = useNavigate();
@@ -93,36 +94,20 @@ function CourseCard (props) {
         ...course,
 
         authors: course.authors.map((authorId) =>
-            authorsData.find((author) => author.id === authorId)
+            authorsList.find((author) => author.id === authorId)
         ),
     }));
-
-
-    const displayAuthors = () => {
-        if (coursesWithAuthors !== undefined && coursesWithAuthors.length > 0) {
-            const filteredCourses = coursesWithAuthors.filter((course) => course.title === props.title)[0];
-            if (props.authors) {
-                if (props.authors.length == 1) {
-                    return `${filteredCourses.authors[0].name}`;
-                } else if (props.authors.length == 2) {
-                    return `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'}`
-                } else if (props.authors.length > 2) {
-                    return `${filteredCourses.authors[0] ? filteredCourses.authors[0].name : 'Unknown'}, ${filteredCourses.authors[1] ? filteredCourses.authors[1].name : 'Unknown'} ...`
-                } else {
-                    return 'Unknown';
-                }
-            } else {
-                return;
-            }
-        }
-    }
 
     return (
         <Card id={props.id}>
             <Title>{props.title ? props.title : 'Title'}</Title>
             <Description>{props.description ? props.description : 'Description'}</Description>
             <Authors><b>Authors: </b>
-                {displayAuthors()}
+                {coursesWithAuthors && coursesWithAuthors.length > 0 ? (
+                    <CourseAuthors authors={coursesWithAuthors.find((course) => course.id === props.id).authors} />
+                    ) : (
+                    <span>Unknown</span>
+                )}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} hours</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>

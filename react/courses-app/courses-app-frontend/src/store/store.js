@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const useStore = create((set) => ({
+const useStore = create((set, get) => ({
     user: {
         isAuth: false,
         name: '',
@@ -12,16 +12,34 @@ const useStore = create((set) => ({
     updateCourses: async () => {
         const response = await fetch('http://localhost:4000/courses/all')
         const { result } = await response.json()
-        set({ courses: result })
+        set((state) => {
+            const existingIds = state.courses.map((course) => course.id)
+            const newCourses = result.filter((course) => !existingIds.includes(course.id))
+            return { courses: [...state.courses, ...newCourses] }
+        })
     },
     updateAuthors: async () => {
         const response = await fetch('http://localhost:4000/authors/all')
         const { result } = await response.json()
-        set({ authors: result })
+        set((state) => {
+            const existingIds = state.authors.map((author) => author.id)
+            const newAuthors = result.filter((author) => !existingIds.includes(author.id))
+            return { authors: [...state.authors, ...newAuthors] }
+        })
     },
     deleteCourse: (id) => {
         set((state) => ({
             courses: state.courses.filter(course => course.id !== id)
+        }))
+    },
+    addAuthor: (author) => {
+        set((state) => ({
+            authors: [...state.authors, author]
+        }))
+    },
+    addCourse: (course) => {
+        set((state) => ({
+            courses: [...state.courses, course]
         }))
     },
 }));

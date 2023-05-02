@@ -5,6 +5,7 @@ import constants from "../../constants";
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../store/store";
 
 const CreateCourseContainer = styled.div`
     display: flex;
@@ -71,10 +72,15 @@ const TextArea = styled.textarea`
 
 function CreateCourse (props) {
 
+    const addAuthor = useStore(state => state.addAuthor);
+    const addCourse = useStore(state => state.addCourse);
+    const authorsList = useStore(state => state.authors);
+    const CoursesList = useStore(state => state.courses);
+
     const [titleInputValue, setTitleInputValue] = useState("");
     const [textAreaValue, setTextAreaValue] = useState("");
     const [authorsInputValue, setAuthorsInputValue] = useState("");
-    const [authors, setAuthors] = useState(constants.mockedAuthorsList);
+    const [authors, setAuthors] = useState(authorsList);
     const [courseAuthors, setCourseAuthors] = useState([]);
     const [durationInputValue, setDurationInputValue] = useState(0);
     const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
@@ -96,12 +102,20 @@ function CreateCourse (props) {
     const createAuthorHandler = () => {
         if (authorsInputValue.length >= 2) {
 
+            const authorId  = uuidv4();
+
+            addAuthor({
+                id: authorId,
+                name: authorsInputValue.toString()
+            })
+
             setAuthors(
                 [...authors, {
-                    id: uuidv4(),
+                    id: authorId,
                     name: authorsInputValue.toString()
                 }]
             );
+
             setAuthorsInputValue('');
         }
     };
@@ -152,18 +166,7 @@ function CreateCourse (props) {
                 authors: courseAuthors.map(el => el.id)
             };
 
-            courseAuthors.forEach(el => {
-                const newAuthor = {
-                    id: el.id,
-                    name: el.name
-                };
-
-                if(!constants.mockedAuthorsList.some(el => el.id === newAuthor.id)){
-                    constants.mockedAuthorsList.push(newAuthor);
-                }
-            });
-
-            constants.mockedCoursesList.push(newCourse);
+            addCourse(newCourse);
 
             navigate("/courses");
         } else {
