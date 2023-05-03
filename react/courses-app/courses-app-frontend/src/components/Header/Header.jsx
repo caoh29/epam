@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Logo from "./components/Logo/Logo";
 import Button from "../../common/Button/Button";
 import { Link } from "react-router-dom";
+import useStore from "../../store/store";
 
 
 const PATH = '../../src/assets/logo.jpg';
@@ -49,13 +50,16 @@ const Title = styled.h3`
 
 function Header () {
 
+    const removeLoginInfo = useStore(state => state.removeLoginInfo);
+    const userName = useStore(state => state.user.name);
+
     return (
         <RedContainer>
             <Logo src={PATH}/>
             <Title>COURSES</Title>
-            <Button gridColumn="11" borderColor="none" width="100px">{localStorage.getItem('name')}</Button>
+            <Button gridColumn="11" borderColor="none" width="100px">{userName}</Button>
             <Link to="/login">
-                <Button gridColumn="12" width="100px" onClick={() => localStorage.clear()}>Logout</Button>
+                <Button gridColumn="12" width="100px" onClick={() => {removeLoginInfo(); localStorage.clear()}}>Logout</Button>
             </Link>
         </RedContainer>
     );

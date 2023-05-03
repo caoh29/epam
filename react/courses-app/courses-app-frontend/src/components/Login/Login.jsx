@@ -5,6 +5,7 @@ import { Link,  useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { loginUser } from "../../api/loginUser.api";
 import { checkEmail, checkPassword } from "../../common/utils/check.js";
+import useStore from "../../store/store";
 
 const LoginContainer = styled.div`
     display: flex;
@@ -20,6 +21,8 @@ function Login () {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const saveLoginInfo = useStore(state => state.saveLoginInfo);
+
     const navigate = useNavigate();
 
     const submitHandler = (e) => {
@@ -31,8 +34,8 @@ function Login () {
                 if (response.status === 201){
                     const token = response.data.result.split(' ')[1];
                     const name = response.data.user.name;
-                    localStorage.setItem('name', name);
                     localStorage.setItem('token', token);
+                    saveLoginInfo(name, email, token);
                     navigate('/courses');
                 } else {
                     alert(`There was a problem with login, status code ${response.status}`);

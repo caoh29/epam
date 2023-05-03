@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const useStore = create((set, get) => ({
+const useStore = create((set) => ({
     user: {
         isAuth: false,
         name: '',
@@ -42,6 +42,26 @@ const useStore = create((set, get) => ({
             courses: [...state.courses, course]
         }))
     },
+    saveLoginInfo: (userName, email, token) => {
+        set({
+            user: {
+                isAuth: true,
+                name: userName,
+                email: email,
+                token: token
+            }
+        })
+    },
+    removeLoginInfo: () => {
+        set({
+            user: {
+                isAuth: false,
+                name: '',
+                email: '',
+                token: '',
+            }
+        })
+    }
 }));
 
 export default useStore;
