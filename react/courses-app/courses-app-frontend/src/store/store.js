@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 
-const useStore = create((set) => ({
+const useStore = create((set, get) => ({
     user: {
         isAuth: false,
         name: '',
         email: '',
         token: '',
+        role: '',
     },
     courses: [],
     authors: [],
@@ -52,15 +53,22 @@ const useStore = create((set) => ({
             }
         })
     },
-    removeLoginInfo: () => {
-        set({
-            user: {
-                isAuth: false,
-                name: '',
-                email: '',
-                token: '',
-            }
+    removeLoginInfo: async () => {
+        const token = get().user.token;
+        const response = await fetch('http://localhost:4000/logout', {
+            method: 'DELETE',
+            headers: { "accept": "*/*", "Authorization": `Bearer ${token}` }
         })
+        if (response.status === 200) {
+            set({
+                user: {
+                    isAuth: false,
+                    name: '',
+                    email: '',
+                    token: '',
+                }
+            })
+        }
     }
 }));
 
