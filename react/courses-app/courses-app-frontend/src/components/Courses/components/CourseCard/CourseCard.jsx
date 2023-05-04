@@ -3,6 +3,7 @@ import Button from "../../../../common/Button/Button";
 import { useNavigate } from "react-router-dom";
 import CourseAuthors from "./components/CourseAuthors/CourseAuthors";
 import useStore from "../../../../store/store.js";
+import { Fragment } from "react";
 
 const Card = styled.div`
     display: grid;
@@ -73,30 +74,40 @@ function CourseCard (props) {
     const courses = useStore((state) => state.courses);
     const authorsList = useStore((state) => state.authors);
     const deleteCourse = useStore((state) => state.deleteCourse);
+    const role = useStore((state) => state.user.role);
 
     const navigate = useNavigate();
 
-    const showCourseHandler = (e) => {
-
-        const courseData = {
-            title: e.target.parentNode.parentNode.firstChild.textContent,
-            description: e.target.parentNode.parentNode.childNodes[1].textContent,
-            authors:  e.target.parentNode.parentNode.childNodes[2].textContent,
-            duration: e.target.parentNode.parentNode.childNodes[3].textContent,
-            creation: e.target.parentNode.parentNode.childNodes[4].textContent,
-            id: e.target.parentNode.parentNode.id,
+    const sendEventData = (event, url) => {
+        const eventPath = event.target.parentNode.parentNode;
+        const data = {
+            title: eventPath.firstChild.textContent,
+            description: eventPath.childNodes[1].textContent,
+            authors:  eventPath.childNodes[2].textContent,
+            duration: eventPath.childNodes[3].textContent,
+            creation: eventPath.childNodes[4].textContent,
+            id: eventPath.id,
         };
+        navigate(url, {state: data});
+    }
 
-        navigate(`/courses/${e.target.parentNode.parentNode.id}`, {state: courseData});
+    const showCourseHandler = (e) => {
+        const url = `/courses/${e.target.parentNode.parentNode.id}`;
+        sendEventData(e, url);
+    }
+
+    const editCourseHandler = (e) => {
+        const url = `/courses/update/${e.target.parentNode.parentNode.id}`;
+        sendEventData(e, url);
     }
 
     const coursesWithAuthors = courses.map((course) => ({
         ...course,
-
         authors: course.authors.map((authorId) =>
             authorsList.find((author) => author.id === authorId)
         ),
     }));
+
 
     return (
         <Card id={props.id}>
@@ -118,8 +129,12 @@ function CourseCard (props) {
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
             <ButtonsContainer>
                 <Button onClick={showCourseHandler} width="150px">Show course</Button>
-                <Button onClick={() => {}} width="auto">Edit</Button>
-                <Button onClick={() => { deleteCourse(props.id) }} width="auto">Delete</Button>
+                {role === 'admin' && (
+                    <Fragment>
+                        <Button onClick={editCourseHandler} width="auto">Edit</Button>
+                        <Button onClick={() => { deleteCourse(props.id) }} width="auto">Delete</Button>
+                    </Fragment>
+                )}
             </ButtonsContainer>
         </Card>
     );

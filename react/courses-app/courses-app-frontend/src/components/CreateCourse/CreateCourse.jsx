@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
-import constants from "../../constants";
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useStore from "../../store/store";
 
 const CreateCourseContainer = styled.div`
@@ -75,7 +74,6 @@ function CreateCourse (props) {
     const addAuthor = useStore(state => state.addAuthor);
     const addCourse = useStore(state => state.addCourse);
     const authorsList = useStore(state => state.authors);
-    const CoursesList = useStore(state => state.courses);
 
     const [titleInputValue, setTitleInputValue] = useState("");
     const [textAreaValue, setTextAreaValue] = useState("");
@@ -176,6 +174,7 @@ function CreateCourse (props) {
 
     return (
         <CreateCourseContainer>
+            <Link to="/courses">Back to courses</Link>
             <GridContainer2x2>
                 <Input 
                     labelText="Title" 

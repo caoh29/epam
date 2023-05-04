@@ -26,6 +26,8 @@ function Courses () {
     const coursesData = useStore((state) => state.courses);
     const updateCourses = useStore((state) => state.updateCourses);
     const updateAuthors = useStore((state) => state.updateAuthors);
+    const getUserRole = useStore((state) => state.getUserRole);
+    const role = useStore((state) => state.user.role);
 
     const [courses, setCourses] = useState([]);
 
@@ -35,6 +37,7 @@ function Courses () {
         const fetchData = async () => {
             await updateAuthors();
             await updateCourses();
+            await getUserRole();
         };
         fetchData();
     }, []);
@@ -47,7 +50,7 @@ function Courses () {
         <CoursesContainer>
             <CoursesNavContainer>
                 <SearchBar setCourses={setCourses}/>
-                <Button width="140px" margin="0 0 0 auto" onClick={() => navigate('/courses/add')}>Add new course</Button>
+                {role === 'admin' && <Button width="140px" margin="0 0 0 auto" onClick={() => navigate('/courses/add')}>Add new course</Button>}
             </CoursesNavContainer>
             {courses.map((course) => { 
                 return <CourseCard key={course.id} id={course.id} title={course.title} description={course.description} authors={course.authors} duration={course.duration} creation={course.creationDate}/>

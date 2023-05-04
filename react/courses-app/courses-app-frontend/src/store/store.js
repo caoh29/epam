@@ -28,10 +28,17 @@ const useStore = create((set, get) => ({
             return { authors: [...state.authors, ...newAuthors] }
         })
     },
-    deleteCourse: (id) => {
-        set((state) => ({
-            courses: state.courses.filter(course => course.id !== id)
-        }))
+    deleteCourse: async (id) => {
+        const token = get().user.token;
+        const response = await fetch(`http://localhost:4000/courses/${id}`, {
+            method: 'DELETE',
+            headers: { "accept": "*/*", "Authorization": `Bearer ${token}` }
+        })
+        if (response.status === 200) {
+            set((state) => ({
+                courses: state.courses.filter(course => course.id !== id)
+            }))
+        }
     },
     addAuthor: (author) => {
         set((state) => ({
@@ -44,14 +51,15 @@ const useStore = create((set, get) => ({
         }))
     },
     saveLoginInfo: (userName, email, token) => {
-        set({
+        set((state) => ({
             user: {
                 isAuth: true,
                 name: userName,
                 email: email,
-                token: token
+                token: token,
+                role: state.user.role,
             }
-        })
+        }))
     },
     removeLoginInfo: async () => {
         const token = get().user.token;
@@ -66,8 +74,28 @@ const useStore = create((set, get) => ({
                     name: '',
                     email: '',
                     token: '',
+                    role: '',
                 }
             })
+        }
+    },
+    getUserRole: async () => {
+        const token = get().user.token;
+        const response = await fetch(`http://localhost:4000/users/me`, {
+            method: 'GET',
+            headers: { "accept": "*/*", "Authorization": `Bearer ${token}` }
+        })
+        const { result } = await response.json();
+        if (response.status === 200) {
+            set((state) => ({
+                user: {
+                    isAuth: state.user.isAuth, 
+                    name: state.user.name,
+                    email: state.user.email,
+                    token: state.user.token,
+                    role: result.role,
+                }
+            }))
         }
     }
 }));
