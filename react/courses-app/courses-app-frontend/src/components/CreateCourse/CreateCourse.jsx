@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
-import { v4 as uuidv4 } from 'uuid';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useStore from "../../store/store";
@@ -97,28 +96,19 @@ function CreateCourse () {
         setAuthorsInputValue(e.target.value);
     };
 
-    const createAuthorHandler = () => {
+    const createAuthorHandler = async () => {
         if (authorsInputValue.length >= 2) {
-
-            addAuthor({
+            const newAuthor = await addAuthor({
                 name: authorsInputValue.toString()
             })
-
-            setAuthors(
-                [...authors, {
-                    name: authorsInputValue.toString()
-                }]
-            );
-
+            setAuthors([...authors, newAuthor]);
             setAuthorsInputValue('');
         }
     };
 
     const addAuthorHandler = (e) => {
         e.preventDefault();
-
         setCourseAuthors([...authors.filter(el => el.name === e.target.firstChild.firstChild.textContent), ...courseAuthors]);
-
         setAuthors(
             authors.filter(el => el.name !== e.target.firstChild.firstChild.textContent)
         );
@@ -126,7 +116,6 @@ function CreateCourse () {
 
     const deleteAuthorHandler = (e) => {
         e.preventDefault();
-
         setAuthors(
             [...courseAuthors.filter(el => el.name === e.target.firstChild.firstChild.textContent), ...authors]
         );
@@ -138,7 +127,6 @@ function CreateCourse () {
     const durationChangeHandler = (e) => {
         if (e.target.value > 0){
             setDurationInputValue(e.target.value);
-
             const hours = Math.floor(e.target.value / 60);
             const minutes = e.target.value % 60;
             setDurationMinutesHours(("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2));
@@ -155,12 +143,11 @@ function CreateCourse () {
                 title: titleInputValue,
                 description: textAreaValue,
                 creationDate: `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
-                duration: durationMinutesHours,
+                duration: Number(durationInputValue),
                 authors: courseAuthors.map(el => el.id)
             };
 
             addCourse(newCourse);
-
             navigate("/courses");
         } else {
             alert("Please, fill all fields");

@@ -83,7 +83,7 @@ function CourseCard (props) {
         const data = {
             title: eventPath.firstChild.textContent,
             description: eventPath.childNodes[1].textContent,
-            authors:  eventPath.childNodes[2].textContent,
+            authorsData:  eventPath.childNodes[2].textContent,
             duration: eventPath.childNodes[3].textContent,
             creation: eventPath.childNodes[4].textContent,
             id: eventPath.id,
