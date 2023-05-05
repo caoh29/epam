@@ -40,10 +40,20 @@ const useStore = create((set, get) => ({
             }))
         }
     },
-    addAuthor: (author) => {
-        set((state) => ({
-            authors: [...state.authors, author]
-        }))
+    addAuthor: async (author) => {
+        const token = get().user.token;
+        const response = await fetch(`http://localhost:4000/authors/add`, {
+            method: 'POST',
+            headers: { "accept": "*/*", "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+            body: JSON.stringify(author)
+        
+        })
+        console.log(response);
+        if (response.status === 200) {
+            set((state) => ({
+                authors: [...state.authors, author]
+            }))
+        }
     },
     addCourse: (course) => {
         set((state) => ({

@@ -100,16 +100,12 @@ function CreateCourse () {
     const createAuthorHandler = () => {
         if (authorsInputValue.length >= 2) {
 
-            const authorId  = uuidv4();
-
             addAuthor({
-                id: authorId,
                 name: authorsInputValue.toString()
             })
 
             setAuthors(
                 [...authors, {
-                    id: authorId,
                     name: authorsInputValue.toString()
                 }]
             );
@@ -156,7 +152,6 @@ function CreateCourse () {
 
         if (check) {
             const newCourse = {
-                id:  uuidv4(),
                 title: titleInputValue,
                 description: textAreaValue,
                 creationDate: `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
