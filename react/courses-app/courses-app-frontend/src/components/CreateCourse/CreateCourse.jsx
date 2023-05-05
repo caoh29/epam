@@ -68,7 +68,7 @@ const TextArea = styled.textarea`
     ${props => props.alignSelf ? `align-self: ${props.alignSelf};` : ""}
 `;
 
-function CreateCourse () {
+function CreateCourse ({ courseExists }) {
 
     const addAuthor = useStore(state => state.addAuthor);
     const addCourse = useStore(state => state.addCourse);

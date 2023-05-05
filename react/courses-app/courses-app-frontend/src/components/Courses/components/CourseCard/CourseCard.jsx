@@ -114,11 +114,11 @@ function CourseCard (props) {
             <Title>{props.title ? props.title : 'Title'}</Title>
             <Description>{props.description ? props.description : 'Description'}</Description>
             <Authors><b>Authors: </b>
-                {coursesWithAuthors && coursesWithAuthors.length > 0 ? (
+                {/* {coursesWithAuthors && coursesWithAuthors.length > 0 ? (
                     <CourseAuthors authors={coursesWithAuthors.find((course) => course.id === props.id).authors} />
                     ) : (
                     <span>Unknown</span>
-                )}
+                )} */}
                 {/* {coursesWithAuthors && coursesWithAuthors.length > 0 ? (
                     <CourseAuthors authors={coursesWithAuthors.find((course) => course.id === props.id).authors} />
                     ) : (

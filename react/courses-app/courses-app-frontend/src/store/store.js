@@ -69,6 +69,19 @@ const useStore = create((set, get) => ({
             }))
         }
     },
+    updateACourse: async (course) => {
+        const token = get().user.token;
+        const response = await fetch(`http://localhost:4000/courses/${course.id}`, {
+            method: 'PUT',
+            headers: { "accept": "*/*", "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
+        })
+        const { result } = await response.json();
+        if (response.status === 200) {
+            set((state) => ({
+                courses: [...state.courses.filter(c => c.id !== course.id), course]
+            }))
+        }
+    },
     saveLoginInfo: (userName, email, token) => {
         set((state) => ({
             user: {
@@ -114,19 +127,6 @@ const useStore = create((set, get) => ({
                     token: state.user.token,
                     role: result.role,
                 }
-            }))
-        }
-    },
-    updateACourse: async (course) => {
-        const token = get().user.token;
-        const response = await fetch(`http://localhost:4000/courses/${course.id}`, {
-            method: 'PUT',
-            headers: { "accept": "*/*", "Content-Type": "application/json", "Authorization": `Bearer ${token}` }
-        })
-        const { result } = await response.json();
-        if (response.status === 200) {
-            set((state) => ({
-                courses: [state.courses.filter(c => c.id !== course.id), course]
             }))
         }
     },

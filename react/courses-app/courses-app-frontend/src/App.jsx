@@ -7,7 +7,6 @@ import { BrowserRouter, Routes,  Route, Navigate } from 'react-router-dom';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
-// import CourseForm from './components/CourseForm/CourseForm';
 import useStore from './store/store';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
@@ -28,8 +27,8 @@ function App() {
           <Route path="/courses/:courseId" element={<Fragment><Header/><CourseInfo /></Fragment>} />
         </Route>
         <Route element={<PrivateRoute isAuth={isAuth && role === 'admin'} />}>
-          <Route path="/courses/add" element={<Fragment><Header/><CreateCourse /></Fragment>} />
-          {/* <Route path="/courses/update/:courseId" element={<Fragment><Header/><CourseForm /></Fragment>} /> */}
+          <Route path="/courses/add" element={<Fragment><Header/><CreateCourse courseExists={false}/></Fragment>} />
+          <Route path="/courses/update/:courseId" element={<Fragment><Header/><CreateCourse courseExists={true}/></Fragment>} />
         </Route>
       </Routes>
     </BrowserRouter>
