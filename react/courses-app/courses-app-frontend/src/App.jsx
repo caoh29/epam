@@ -7,6 +7,7 @@ import { BrowserRouter, Routes,  Route, Navigate } from 'react-router-dom';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
+// import CourseForm from './components/CourseForm/CourseForm';
 import useStore from './store/store';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
@@ -28,7 +29,7 @@ function App() {
         </Route>
         <Route element={<PrivateRoute isAuth={isAuth && role === 'admin'} />}>
           <Route path="/courses/add" element={<Fragment><Header/><CreateCourse /></Fragment>} />
-          <Route path="/courses/update/:courseId" element={<Fragment><Header/><CreateCourse /></Fragment>} />
+          {/* <Route path="/courses/update/:courseId" element={<Fragment><Header/><CourseForm /></Fragment>} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

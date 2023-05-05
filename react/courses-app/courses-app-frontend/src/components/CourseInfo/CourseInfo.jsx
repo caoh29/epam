@@ -35,7 +35,7 @@ function CourseInfo () {
 
     const location = useLocation();
 
-    const { title, description, id, duration, creation, authors } = location.state;
+    const { title, description, id, duration, creation, authorsData } = location.state;
 
     return (
         <CourseInfoContainer>
@@ -50,7 +50,7 @@ function CourseInfo () {
                     <b>Duration:</b>{duration.split(' ')[1]}<br/>
                     <b>Created:</b>{creation.split(' ')[1]}<br/>
                     <b>Authors:</b><br/>
-                    {authors.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/).map(author => (
+                    {authorsData.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/).map(author => (
                         <Fragment key={Math.floor(Math.random() * 1000)}>
                             {author}
                             <br/>

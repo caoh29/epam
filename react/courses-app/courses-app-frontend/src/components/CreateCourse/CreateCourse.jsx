@@ -69,7 +69,7 @@ const TextArea = styled.textarea`
     ${props => props.alignSelf ? `align-self: ${props.alignSelf};` : ""}
 `;
 
-function CreateCourse (props) {
+function CreateCourse () {
 
     const addAuthor = useStore(state => state.addAuthor);
     const addCourse = useStore(state => state.addCourse);
@@ -160,7 +160,7 @@ function CreateCourse (props) {
                 title: titleInputValue,
                 description: textAreaValue,
                 creationDate: `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
-                duration: durationInputValue,
+                duration: durationMinutesHours,
                 authors: courseAuthors.map(el => el.id)
             };
 
