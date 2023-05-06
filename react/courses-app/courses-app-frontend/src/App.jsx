@@ -1,7 +1,7 @@
 import './App.css'
 import Courses from './components/Courses/Courses';
 import Header from './components/Header/Header';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import { Fragment } from 'react';
 import { BrowserRouter, Routes,  Route, Navigate } from 'react-router-dom';
 import Registration from './components/Registration/Registration';
@@ -27,8 +27,8 @@ function App() {
           <Route path="/courses/:courseId" element={<Fragment><Header/><CourseInfo /></Fragment>} />
         </Route>
         <Route element={<PrivateRoute isAuth={isAuth && role === 'admin'} />}>
-          <Route path="/courses/add" element={<Fragment><Header/><CreateCourse courseExists={false}/></Fragment>} />
-          <Route path="/courses/update/:courseId" element={<Fragment><Header/><CreateCourse courseExists={true}/></Fragment>} />
+          <Route path="/courses/add" element={<Fragment><Header/><CourseForm courseExists={false}/></Fragment>} />
+          <Route path="/courses/update/:courseId" element={<Fragment><Header/><CourseForm courseExists={true}/></Fragment>} />
         </Route>
       </Routes>
     </BrowserRouter>

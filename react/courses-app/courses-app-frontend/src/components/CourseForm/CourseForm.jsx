@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import useStore from "../../store/store";
 
-const CreateCourseContainer = styled.div`
+const CourseFormContainer = styled.div`
     display: flex;
     flex-direction: column;
     border: 3px solid salmon;
@@ -68,7 +68,7 @@ const TextArea = styled.textarea`
     ${props => props.alignSelf ? `align-self: ${props.alignSelf};` : ""}
 `;
 
-function CreateCourse ({ courseExists }) {
+function CourseForm ({ courseExists }) {
 
     const addAuthor = useStore(state => state.addAuthor);
     const authorsList = useStore(state => state.authors);
@@ -76,14 +76,16 @@ function CreateCourse ({ courseExists }) {
     const addCourse = useStore(state => state.addCourse);
     const updateCourse = useStore(state => state.updateACourse);
 
-    const location = useLocation();
     const navigate = useNavigate();
 
-    const id = courseExists ? location.state.id : "";
-    const duration = courseExists ? Number(location.state.duration.split(" ")[1]) : 0;
-    const authorsData = courseExists ? location.state.authorsData : "";
+    const location = useLocation();
+    const locationData = location.state;
 
-    const mm_hh = () => {
+    const id = courseExists ? locationData.id : "";
+    const duration = courseExists ? Number(locationData.duration.split(" ")[1]) : 0;
+    const authorsData = courseExists ? locationData.authorsData : "";
+
+    const getDurationInMM_HH = () => {
         if (courseExists) {
             const hours = Math.floor(duration / 60);
             const minutes = duration % 60;
@@ -107,18 +109,30 @@ function CreateCourse ({ courseExists }) {
             return authors;
         }
         else {
-            return [];
+            return authorsList;
         }
-    
     };
 
-    const [titleInputValue, setTitleInputValue] = useState(courseExists ? location.state.title : "");
-    const [textAreaValue, setTextAreaValue] = useState(courseExists ? location.state.description : "");
+    const getCourseAuthors = () => {
+        if (courseExists) {
+            const authors = [];
+            authorsData.forEach(el => {
+                authors.push(el.name);
+            });
+            return authors;
+        }
+        else {
+            return [];
+        }
+    };
+
+    const [titleInputValue, setTitleInputValue] = useState(courseExists ? locationData.title : "");
+    const [textAreaValue, setTextAreaValue] = useState(courseExists ? locationData.description : "");
     const [authorsInputValue, setAuthorsInputValue] = useState("");
-    const [authors, setAuthors] = useState(authorsList);
-    const [courseAuthors, setCourseAuthors] = useState([]);
+    const [authors, setAuthors] = useState(getAuthors());
+    const [courseAuthors, setCourseAuthors] = useState(getCourseAuthors());
     const [durationInputValue, setDurationInputValue] = useState(duration);
-    const [durationMinutesHours, setDurationMinutesHours] = useState(mm_hh());
+    const [durationMinutesHours, setDurationMinutesHours] = useState(getDurationInMM_HH());
 
 
     const titleChangeHandler = (e) =>  {
@@ -170,7 +184,7 @@ function CreateCourse ({ courseExists }) {
         }
     };
 
-    const createCourseClickHandler = () => {
+    const submitCourseClickHandler = () => {
 
         const check = titleInputValue.length > 0 && textAreaValue.length >= 2 && courseAuthors.length > 0 && durationInputValue >= 1;
 
@@ -178,7 +192,7 @@ function CreateCourse ({ courseExists }) {
             const newCourse = {
                 title: titleInputValue,
                 description: textAreaValue,
-                creationDate: courseExists ? location.state.creation : `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
+                creationDate: courseExists ? locationData.creation : `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
                 duration: Number(durationInputValue),
                 authors: courseAuthors.map(el => el.id)
             };
@@ -191,7 +205,7 @@ function CreateCourse ({ courseExists }) {
     };
 
     return (
-        <CreateCourseContainer>
+        <CourseFormContainer>
             <Link to="/courses">Back to courses</Link>
             <GridContainer2x2>
                 <Input 
@@ -212,7 +226,7 @@ function CreateCourse ({ courseExists }) {
                     gridRow="2"
                     width="150px"
                     justifySelf="end"
-                    onClick={createCourseClickHandler}>
+                    onClick={submitCourseClickHandler}>
                         {courseExists ? "Update course" : "Create course"}
                 </Button>
             </GridContainer2x2>
@@ -299,9 +313,9 @@ function CreateCourse ({ courseExists }) {
                     })}
                 </CellContainer>
             </GridContainer2x2>
-        </CreateCourseContainer>
+        </CourseFormContainer>
     );
 }
 
 
-export default CreateCourse;
+export default CourseForm;
