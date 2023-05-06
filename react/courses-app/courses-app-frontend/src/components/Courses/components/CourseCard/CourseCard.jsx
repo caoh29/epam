@@ -125,7 +125,7 @@ function CourseCard (props) {
                     <span>Unknown</span>
                 )} */}
             </Authors>
-            <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} hours</Duration>
+            <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} minutes</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
             <ButtonsContainer>
                 <Button onClick={showCourseHandler} width="150px">Show course</Button>

@@ -76,46 +76,16 @@ function CreateCourse ({ courseExists }) {
     const addCourse = useStore(state => state.addCourse);
     const updateCourse = useStore(state => state.updateACourse);
 
-    let title;
-    let description;
-    let id;
-    let creation;
-    let courseAuthorsArr;
-    let AuthorsArr;
-    let durationInMinutes;
-    let durationInHoursAndMinutes;
-
-
-    if(courseExists) {
-
-        const location = useLocation();
-
-        const { title, description, id, duration, creation, authorsData } = location.state;
-
-        const courseAuthorsArr = authorsData.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/);
-
-        const AuthorsArr = authorsList.filter(author => !courseAuthorsArr.includes(author.name));
-    
-
-        const durationInHoursAndMinutes = duration.split(' ')[1];
-        const [hours, minutes] = durationInHoursAndMinutes.split(':').map(Number);
-        const durationInMinutes = hours * 60 + minutes;
-        
-
-        return (title, description, id, creation, courseAuthorsArr, AuthorsArr, durationInMinutes, durationInHoursAndMinutes);
-    }
-
-
-
-    const [titleInputValue, setTitleInputValue] = useState(courseExists ? title : "");
-    const [textAreaValue, setTextAreaValue] = useState(courseExists ? description : "");
-    const [authorsInputValue, setAuthorsInputValue] = useState("");
-    const [authors, setAuthors] = useState(courseExists ? AuthorsArr : authorsList);
-    const [courseAuthors, setCourseAuthors] = useState(courseExists ? courseAuthorsArr : []);
-    const [durationInputValue, setDurationInputValue] = useState(durationInMinutes);
-    const [durationMinutesHours, setDurationMinutesHours] = useState(courseExists ? durationInHoursAndMinutes : "00:00");
-
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const [titleInputValue, setTitleInputValue] = useState("");
+    const [textAreaValue, setTextAreaValue] = useState("");
+    const [authorsInputValue, setAuthorsInputValue] = useState("");
+    const [authors, setAuthors] = useState(authorsList);
+    const [courseAuthors, setCourseAuthors] = useState([]);
+    const [durationInputValue, setDurationInputValue] = useState(0);
+    const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
 
     const titleChangeHandler = (e) =>  {
         setTitleInputValue(e.target.value);
@@ -166,6 +136,45 @@ function CreateCourse ({ courseExists }) {
         }
     };
 
+    const id = courseExists ? location.state.id : "";
+
+
+    // if (id !== "") {
+    //     const setInitialData = () => {
+
+    //         const getInitialData =  async () => {
+    //             const response = await fetch(`http://localhost:4000/courses/${id}`);
+    //             const { result } = await response.json();
+    //             console.log(result);
+    //             const { title, description, duration, authors  } = result;
+    //             return { title, description, duration, authors };
+    //         };
+
+    //         const course = getInitialData();
+
+    //         const getAuthor = async (authorId) => {
+    //             const response = await fetch(`http://localhost:4000/authors/${authorId}`);
+    //             const { result } = await response.json();
+    //             console.log(result);
+    //             const author = result;
+    //             return author;
+    //         };
+
+    //         const courseAuthors = course.authors.map(authorId => getAuthor(authorId));
+
+    //         setTitleInputValue(course.title);
+    //         setTextAreaValue(course.description);
+    //         setCourseAuthors(courseAuthors);
+    //         setAuthors(authorsList.filter(author => !course.authors.includes(author.id)));
+    //         setDurationInputValue(course.duration);
+    //         const hours = Math.floor(course.duration / 60);
+    //         const minutes = course.duration % 60;
+    //         setDurationMinutesHours(("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2));
+    //     };
+
+    //     setInitialData();
+    // }
+
 
     const createCourseClickHandler = () => {
 
@@ -180,7 +189,7 @@ function CreateCourse ({ courseExists }) {
                 authors: courseAuthors.map(el => el.id)
             };
 
-            addCourse(newCourse);
+            courseExists ? updateCourse(id, newCourse) : addCourse(newCourse);
             navigate("/courses");
         } else {
             alert("Please, fill all fields");
@@ -210,7 +219,7 @@ function CreateCourse ({ courseExists }) {
                     width="150px"
                     justifySelf="end"
                     onClick={createCourseClickHandler}>
-                        Create course
+                        {courseExists ? "Update course" : "Create course"}
                 </Button>
             </GridContainer2x2>
             <Label htmlFor="TextArea" margin="20px 0 0 0">Description</Label>
