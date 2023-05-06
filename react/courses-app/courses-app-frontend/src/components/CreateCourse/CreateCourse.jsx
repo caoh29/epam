@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import useStore from "../../store/store";
 
 const CreateCourseContainer = styled.div`
@@ -71,16 +71,49 @@ const TextArea = styled.textarea`
 function CreateCourse ({ courseExists }) {
 
     const addAuthor = useStore(state => state.addAuthor);
-    const addCourse = useStore(state => state.addCourse);
     const authorsList = useStore(state => state.authors);
 
-    const [titleInputValue, setTitleInputValue] = useState("");
-    const [textAreaValue, setTextAreaValue] = useState("");
+    const addCourse = useStore(state => state.addCourse);
+    const updateCourse = useStore(state => state.updateACourse);
+
+    let title;
+    let description;
+    let id;
+    let creation;
+    let courseAuthorsArr;
+    let AuthorsArr;
+    let durationInMinutes;
+    let durationInHoursAndMinutes;
+
+
+    if(courseExists) {
+
+        const location = useLocation();
+
+        const { title, description, id, duration, creation, authorsData } = location.state;
+
+        const courseAuthorsArr = authorsData.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/);
+
+        const AuthorsArr = authorsList.filter(author => !courseAuthorsArr.includes(author.name));
+    
+
+        const durationInHoursAndMinutes = duration.split(' ')[1];
+        const [hours, minutes] = durationInHoursAndMinutes.split(':').map(Number);
+        const durationInMinutes = hours * 60 + minutes;
+        
+
+        return (title, description, id, creation, courseAuthorsArr, AuthorsArr, durationInMinutes, durationInHoursAndMinutes);
+    }
+
+
+
+    const [titleInputValue, setTitleInputValue] = useState(courseExists ? title : "");
+    const [textAreaValue, setTextAreaValue] = useState(courseExists ? description : "");
     const [authorsInputValue, setAuthorsInputValue] = useState("");
-    const [authors, setAuthors] = useState(authorsList);
-    const [courseAuthors, setCourseAuthors] = useState([]);
-    const [durationInputValue, setDurationInputValue] = useState(0);
-    const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
+    const [authors, setAuthors] = useState(courseExists ? AuthorsArr : authorsList);
+    const [courseAuthors, setCourseAuthors] = useState(courseExists ? courseAuthorsArr : []);
+    const [durationInputValue, setDurationInputValue] = useState(durationInMinutes);
+    const [durationMinutesHours, setDurationMinutesHours] = useState(courseExists ? durationInHoursAndMinutes : "00:00");
 
     const navigate = useNavigate();
 
