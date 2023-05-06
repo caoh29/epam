@@ -103,9 +103,10 @@ function CourseForm ({ courseExists }) {
     const getAuthors = () => {
         if (courseExists) {
             const authors = [];
-            authorsData.forEach(el => {
-                authors.push(el.name);
-            });
+            console.log(authorsData);
+            // authorsData.forEach(el => {
+            //     authors.push(el.name);
+            // });
             return authors;
         }
         else {
@@ -116,9 +117,9 @@ function CourseForm ({ courseExists }) {
     const getCourseAuthors = () => {
         if (courseExists) {
             const authors = [];
-            authorsData.forEach(el => {
-                authors.push(el.name);
-            });
+            // authorsData.forEach(el => {
+            //     authors.push(el.name);
+            // });
             return authors;
         }
         else {
