@@ -79,13 +79,47 @@ function CreateCourse ({ courseExists }) {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [titleInputValue, setTitleInputValue] = useState("");
-    const [textAreaValue, setTextAreaValue] = useState("");
+    const id = courseExists ? location.state.id : "";
+    const duration = courseExists ? Number(location.state.duration.split(" ")[1]) : 0;
+    const authorsData = courseExists ? location.state.authorsData : "";
+
+    const mm_hh = () => {
+        if (courseExists) {
+            const hours = Math.floor(duration / 60);
+            const minutes = duration % 60;
+    
+            const formattedHours = String(hours).padStart(2, '0');
+            const formattedMinutes = String(minutes).padStart(2, '0');
+    
+            return `${formattedHours}:${formattedMinutes}`;
+        }
+        else {
+            return "00:00";
+        }
+    };
+
+    const getAuthors = () => {
+        if (courseExists) {
+            const authors = [];
+            authorsData.forEach(el => {
+                authors.push(el.name);
+            });
+            return authors;
+        }
+        else {
+            return [];
+        }
+    
+    };
+
+    const [titleInputValue, setTitleInputValue] = useState(courseExists ? location.state.title : "");
+    const [textAreaValue, setTextAreaValue] = useState(courseExists ? location.state.description : "");
     const [authorsInputValue, setAuthorsInputValue] = useState("");
     const [authors, setAuthors] = useState(authorsList);
     const [courseAuthors, setCourseAuthors] = useState([]);
-    const [durationInputValue, setDurationInputValue] = useState(0);
-    const [durationMinutesHours, setDurationMinutesHours] = useState("00:00");
+    const [durationInputValue, setDurationInputValue] = useState(duration);
+    const [durationMinutesHours, setDurationMinutesHours] = useState(mm_hh());
+
 
     const titleChangeHandler = (e) =>  {
         setTitleInputValue(e.target.value);
@@ -136,46 +170,6 @@ function CreateCourse ({ courseExists }) {
         }
     };
 
-    const id = courseExists ? location.state.id : "";
-
-
-    // if (id !== "") {
-    //     const setInitialData = () => {
-
-    //         const getInitialData =  async () => {
-    //             const response = await fetch(`http://localhost:4000/courses/${id}`);
-    //             const { result } = await response.json();
-    //             console.log(result);
-    //             const { title, description, duration, authors  } = result;
-    //             return { title, description, duration, authors };
-    //         };
-
-    //         const course = getInitialData();
-
-    //         const getAuthor = async (authorId) => {
-    //             const response = await fetch(`http://localhost:4000/authors/${authorId}`);
-    //             const { result } = await response.json();
-    //             console.log(result);
-    //             const author = result;
-    //             return author;
-    //         };
-
-    //         const courseAuthors = course.authors.map(authorId => getAuthor(authorId));
-
-    //         setTitleInputValue(course.title);
-    //         setTextAreaValue(course.description);
-    //         setCourseAuthors(courseAuthors);
-    //         setAuthors(authorsList.filter(author => !course.authors.includes(author.id)));
-    //         setDurationInputValue(course.duration);
-    //         const hours = Math.floor(course.duration / 60);
-    //         const minutes = course.duration % 60;
-    //         setDurationMinutesHours(("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2));
-    //     };
-
-    //     setInitialData();
-    // }
-
-
     const createCourseClickHandler = () => {
 
         const check = titleInputValue.length > 0 && textAreaValue.length >= 2 && courseAuthors.length > 0 && durationInputValue >= 1;
@@ -184,7 +178,7 @@ function CreateCourse ({ courseExists }) {
             const newCourse = {
                 title: titleInputValue,
                 description: textAreaValue,
-                creationDate: `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
+                creationDate: courseExists ? location.state.creation : `${new Date().getDay()}/${new Date().getMonth()}/${new Date().getFullYear()}`,
                 duration: Number(durationInputValue),
                 authors: courseAuthors.map(el => el.id)
             };

@@ -119,11 +119,6 @@ function CourseCard (props) {
                     ) : (
                     <span>Unknown</span>
                 )} */}
-                {/* {coursesWithAuthors && coursesWithAuthors.length > 0 ? (
-                    <CourseAuthors authors={coursesWithAuthors.find((course) => course.id === props.id).authors} />
-                    ) : (
-                    <span>Unknown</span>
-                )} */}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} minutes</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
