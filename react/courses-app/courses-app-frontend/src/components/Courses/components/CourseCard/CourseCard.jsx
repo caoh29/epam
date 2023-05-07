@@ -101,12 +101,18 @@ function CourseCard (props) {
         sendEventData(e, url);
     }
 
-    const coursesWithAuthors = courses.map((course) => ({
-        ...course,
-        authors: course.authors.map((authorId) =>
-            authorsList.find((author) => author.id === authorId)
-        ),
-    }));
+    const coursesWithAuthors = courses.map((course) => {
+        if (Object.hasOwn(course, 'authors')) {
+            return ({
+                ...course,
+                authors: course.authors.map((authorId) =>
+                    authorsList.find((author) => author.id === authorId)
+                    )
+            });
+        } else {
+            return course;
+        }
+    });
 
 
     return (
@@ -114,11 +120,11 @@ function CourseCard (props) {
             <Title>{props.title ? props.title : 'Title'}</Title>
             <Description>{props.description ? props.description : 'Description'}</Description>
             <Authors><b>Authors: </b>
-                {/* {coursesWithAuthors && coursesWithAuthors.length > 0 ? (
+                {coursesWithAuthors.length > 0 && coursesWithAuthors.find((course) => course.id === props.id) !== undefined ? (
                     <CourseAuthors authors={coursesWithAuthors.find((course) => course.id === props.id).authors} />
                     ) : (
                     <span>Unknown</span>
-                )} */}
+                )}
             </Authors>
             <Duration><b>Duration: </b>{props.duration ? props.duration : '00:00'} minutes</Duration>
             <Creation><b>Created: </b>{props.creation ? props.creation : 'DD/MM/YYYY'}</Creation>
