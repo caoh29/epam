@@ -3,9 +3,9 @@ function CourseAuthors({ authors }) {
 
     return (
         <Fragment>
-            {authors.map((author) => (
-            <span key={author.id}>{author.name} </span>
-            ))}
+            {authors.length > 1 ? authors.map((author) => (
+            <span key={author.id}>{author.name}, </span>
+            )) : authors.map((author) => <span key={author.id}>{author.name}</span>)}
         </Fragment>
     );
 };

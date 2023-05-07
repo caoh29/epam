@@ -102,12 +102,9 @@ function CourseForm ({ courseExists }) {
 
     const getAuthors = () => {
         if (courseExists) {
-            const authors = [];
-            console.log(authorsData);
-            // authorsData.forEach(el => {
-            //     authors.push(el.name);
-            // });
-            return authors;
+            const authorsArrNames = authorsData.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/).map(author => author.trim());
+            const excludedAuthors = authorsList.filter(el => !authorsArrNames.includes(el.name));
+            return excludedAuthors;
         }
         else {
             return authorsList;
@@ -116,11 +113,9 @@ function CourseForm ({ courseExists }) {
 
     const getCourseAuthors = () => {
         if (courseExists) {
-            const authors = [];
-            // authorsData.forEach(el => {
-            //     authors.push(el.name);
-            // });
-            return authors;
+            const authorsArrNames = authorsData.match(/Authors:\s*(.*)/)?.[1].split(/\s*,\s*/).map(author => author.trim());
+            const includedAuthors = authorsList.filter(el => authorsArrNames.includes(el.name));
+            return includedAuthors;
         }
         else {
             return [];
